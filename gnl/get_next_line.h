@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:18 by cofoundo          #+#    #+#             */
-/*   Updated: 2019/11/26 19:45:25 by cofoundo         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:39:21 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+
+typedef	struct		s_list
+{
+	size_t			mv;
+}					t_list;
 
 int	get_next_line(int fd, char **line);
 

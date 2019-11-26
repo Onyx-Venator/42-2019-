@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2019/11/26 20:14:39 by cofoundo         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:39:10 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int		get_next_line(int fd, char **line)
 {
 	static	char	BUFFER[OPEN_MAX][BUFFER_SIZE];
 	char			*tmp;
-	int				i;
 	int				count;
 
 	count = 0;
@@ -56,10 +55,16 @@ int		get_next_line(int fd, char **line)
 		return (-1);
 	if (!BUFFER)
 	{
-		if ((i = read()
-
+		if ((read(fd, BUFFER[0], BUFFER_SIZE)) == -1)
+			return (-1);
+		mv = 0;
+		while (mv <= BUFFER_SIZE)
+		{
+			while (BUFFER[0][mv] != )
+		}
 	}
 	else
 	{
+		//reinitialiser le mv avant le return si mv<BUFFER_SIZE
 	}
 }
