@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2019/11/27 16:29:33 by cofoundo         ###   ########.fr       */
+/*   Updated: 2019/11/27 19:47:34 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,47 @@ int		get_next_line(int fd, char **line)
 		return (1);
 	}
 	else
-		//relancer la fonction
+		{
+			if (!(tmp = malloc(sizeof(char) * BUFFER_SIZE)))
+				return (-1);
+			tmp[0] = 0;
+			while (tmp[i] != '\n')
+			{
+				i = 0;
+				if ((count = read(fd, tmp, BUFFER_SIZE)) == -1)
+					return (-1);
+				if (count == 0 && tmp[0] == NULL)
+					return (0);
+				if ((buffer = ft_strjoin(buffer, tmp)) == NULL)
+					return (-1);
+				while (i <= count && tmp[i] != '\n')
+					i++;
+				if (tmp[i] != '\n')
+				{
+					free(tmp);
+					if (!(tmp = malloc(sizeof(char) * BUFFER_SIZE)))
+						return (-1);
+				}
+			}
+			free(tmp);
+			count = 0;
+			i = 0;
+			while (buffer[i] != '\n')
+			{
+				i++;
+				count++;
+			}
+			i = 0;
+			if (!(tmp = malloc(sizeof(char) * (count + 1))))
+				return (-1);
+			while (i <= count && buffer != '\n')
+			{
+				tmp[i++] = buffer;
+				buffer++;
+			}
+			tmp[i] = '\0';
+			*line = tmp;
+			buffer = ft_substr(buffer, count);
+			return (1);
+		}
 }
