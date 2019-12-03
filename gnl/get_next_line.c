@@ -60,23 +60,27 @@ char		*ft_strjoin(char *s1, char *s2)
 		while (s2[++i])
 			dst[i] = s2[i];
 		dst[i] = '\0';
+		free(s2);
+		s2 = NULL;
 		return (dst);
 	}
 	else
 	{
 		i = ft_strlen(s1) + ft_strlen(s2);
-	if (!(dst = malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		dst[i] = s1[i];
-	j = -1;
-	while (s2[++j])
-		dst[++i - 1] = s2[j];
-	free(s2);
-	s1 = NULL;
-	dst[i] = '\0';
-	return (dst);
+		if (!(dst = malloc(sizeof(char) * (i + 1))))
+			return (NULL);
+		i = -1;
+		while (s1[++i])
+			dst[i] = s1[i];
+		j = -1;
+		while (s2[++j])
+			dst[++i - 1] = s2[j];
+		free(s2);
+		free(s1);
+		s2 = NULL;
+		s1 = NULL;
+		dst[i] = '\0';
+		return (dst);
 	}
 }
 
@@ -98,58 +102,71 @@ int			ft_verif(char *buffer, char c)
 
 int			get_next_line(int fd, char **line)
 {
-	static	char	buffer[BUFFER_SIZE + 1];
-	char			*dst;
-	int				count;
-	int				i;
-	int				dtc;
+	static	char	*buffer = NULL;
+	size_t		i;
+	size_t		ret;
 
-	if (BUFFER_SIZE < 1 || fd < 0 || read(fd,0,0) < 0)
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) == -1)
 		return (-1);
-	i = -1;
-	dst = NULL;
-	if (buffer[0] != '\0' && BUFFER_SIZE > 1)
+	if (*buffer)
 	{
-		if ((count = ft_verif(buffer, '\n')) > 0)
+		i = -1;
+		if ((ret = ft_verif(buffer, '\n')) == 0)
 		{
-			write(1, "ok\n", 3);
-			while(++i < count)
+			if (!(*line = ft_strjoin(*line, buffer)))
+				return (-1);
+			free(buffer);
+			buffer = NULL;
+
+		}
+		else
+		{
+			if (!(*line = malloc(sizeof(char) * (ret + 1))))
+				return (-1);
+			while (++i < ret)
 				*line[i] = buffer[i];
 			*line[i] = '\0';
-			i = -1;
-			while (buffer[++i + count])
-				buffer[i] = buffer[i + count];
-			buffer[i + count] = '\0';
+			i = 1;
+			while (buffer[i + ret])
+			{
+				buffer[i] = buffer[i + ret];
+				i++;
+			}
+			buffer[i] = '\0';
 			return (1);
 		}
-		dst = ft_strjoin(buffer, dst);
 	}
-	while((count = read(fd, buffer, BUFFER_SIZE)) > 0)
-	{
-		buffer[count] = '\0';
-		if ((dtc = ft_verif(buffer, '\n')) > 0)
-		{
-			while(++i < dtc)
-				dst[i] = buffer[i];
-			dst[i] = '\0';
-			*line = dst;
-			write(1, "X", 1);
-			while (buffer[++i + dtc])
-				buffer[i] = buffer[i + dtc];
-			buffer[i + dtc] = '\0';
-			write(1, "Y", 1);
-			return (1);
-		}
-		if (count < BUFFER_SIZE)
-		{
-			dst = ft_strjoin(buffer, dst);
-			*line = dst;
-			return (0);
-		}
-		dst = ft_strjoin(buffer, dst);
-	}
-	if (count == -1)
+	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
+	while ((ret = read(fd, buffer, BUFFER_SIZE)))
+	{
+		i = -1;
+		buffer[ret] = '\0';
+		if ((ret = ft_verif(buffer, '\n')) == 0)
+		{
+			if (!(*line = ft_strjoin(*line, buffer)))
+                                return (-1);
+                        free(buffer);
+                        buffer = NULL;
+		}
+		else
+		{
+			if (!(*line = malloc(sizeof(char) * (ret + 1))))
+				return (-1);
+                        while (++i < ret)
+                                *line[i] = buffer[i];
+                        *line[i] = '\0';
+                        i = 1;
+                        while (buffer[i + ret])
+                        {
+                                buffer[i] = buffer[i + ret];
+                                i++;
+                        }
+                        buffer[i] = '\0';
+                        return (1);
+		}
+	}
+	*line = buffer;
 	return (0);
 }
 
@@ -159,10 +176,10 @@ int	main(int ar, char **av)
 	int fd = 0;
 	int ret = 0;
 	int	i = 0;
-	ar = 0;
 	char *line;
 
 	line = NULL;
+	(void) ar;
 	if (av[2]) {
 		fd = av[2][0];
 	} else {
