@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2019/11/30 20:14:45 by cofoundo         ###   ########.fr       */
+/*   Updated: 2019/12/03 18:52:35 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ size_t		ft_strlen(char *s)
 	size_t	i;
 
 	i = -1;
+	if (!s)
+		return (0);
 	while (s[++i])
 		;
 	return (i);
@@ -94,7 +96,9 @@ int			ft_verif(char *buffer, char c)
 	while (buffer[i])
 	{
 		if (buffer[i] == c)
+		{
 			return (i);
+		}
 		i++;
 	}
 	return (0);
@@ -103,36 +107,37 @@ int			ft_verif(char *buffer, char c)
 int			get_next_line(int fd, char **line)
 {
 	static	char	*buffer = NULL;
+	char			*save;
+	char			*tmp;
 	size_t		i;
 	size_t		ret;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) == -1)
 		return (-1);
-	if (*buffer)
+		save = NULL;
+	if (buffer != NULL)
 	{
 		i = -1;
 		if ((ret = ft_verif(buffer, '\n')) == 0)
 		{
-			if (!(*line = ft_strjoin(*line, buffer)))
+			if (!(save = ft_strjoin(0, buffer)))
 				return (-1);
-			free(buffer);
-			buffer = NULL;
-
 		}
 		else
 		{
-			if (!(*line = malloc(sizeof(char) * (ret + 1))))
+			if (!(save = malloc(sizeof(char) * (ret + 1))))
 				return (-1);
 			while (++i < ret)
-				*line[i] = buffer[i];
-			*line[i] = '\0';
-			i = 1;
+				save[i] = buffer[i];
+			save[i] = '\0';
+			i = 0;
 			while (buffer[i + ret])
 			{
 				buffer[i] = buffer[i + ret];
 				i++;
 			}
 			buffer[i] = '\0';
+			*line = save;
 			return (1);
 		}
 	}
@@ -140,30 +145,40 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	while ((ret = read(fd, buffer, BUFFER_SIZE)))
 	{
-		i = -1;
 		buffer[ret] = '\0';
-		if ((ret = ft_verif(buffer, '\n')) == 0)
+		if (ft_verif(buffer, '\n') != 0)
 		{
-			if (!(*line = ft_strjoin(*line, buffer)))
-                                return (-1);
-                        free(buffer);
-                        buffer = NULL;
+			if (!(tmp = malloc(sizeof(char) * (ft_verif(buffer, '\n') + 1))))
+				return (-1);
+			i = -1;
+			while (buffer[++i] != '\n')
+				tmp[i] = buffer[i];
+			tmp[i] = '\0';
+			if (*save)
+			{
+				write(1, "ok\n", 3);
+				if ((tmp = ft_strjoin(tmp, save)) == 0)
+					return (-1);
+			}
+			ret = 0;
+			while (buffer[++i])
+			{
+				buffer[ret] = buffer[i];
+				ret++;
+			}
+			buffer[ret] = '\0';
+			*line = tmp;
+			return (1);
 		}
 		else
 		{
-			if (!(*line = malloc(sizeof(char) * (ret + 1))))
+			if (!(save = malloc(sizeof(char) * (ret + 1))))
 				return (-1);
-                        while (++i < ret)
-                                *line[i] = buffer[i];
-                        *line[i] = '\0';
-                        i = 1;
-                        while (buffer[i + ret])
-                        {
-                                buffer[i] = buffer[i + ret];
-                                i++;
-                        }
-                        buffer[i] = '\0';
-                        return (1);
+			while (ret >= 0)
+			{
+				save[ret] = buffer[ret];
+				ret--;
+			}
 		}
 	}
 	*line = buffer;
@@ -213,8 +228,8 @@ int	main(int ar, char **av)
 }
 while ((count = read(fd, buffer, BUFFER_SIZE)))
 {
-	count = ft_verif(buffer, '\n');
 	buffer[count] = '\0';
+	count = ft_verif(buffer, '\n');
 	if (count != 0)
 	{
 		while (++i < count)
@@ -233,3 +248,6 @@ while ((count = read(fd, buffer, BUFFER_SIZE)))
 	if (!(buffer = ft_strjoin(buffer, tmp)))
 		return (-1);
 } *line = save;*/
+/*printf("Buffer : - %s \n", buffer);
+write(1, "ok\n", 3);
+printf("tmp Lecture : - %s \n", tmp);*/
