@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2019/12/03 18:52:35 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/01/12 16:25:11 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char		*ft_strjoin(char *s1, char *s2)
 		while (s2[++i])
 			dst[i] = s2[i];
 		dst[i] = '\0';
-		free(s2);
+		//free(s2);
 		s2 = NULL;
 		return (dst);
 	}
@@ -77,7 +77,7 @@ char		*ft_strjoin(char *s1, char *s2)
 		j = -1;
 		while (s2[++j])
 			dst[++i - 1] = s2[j];
-		free(s2);
+		//free(s2);
 		free(s1);
 		s2 = NULL;
 		s1 = NULL;
@@ -106,82 +106,40 @@ int			ft_verif(char *buffer, char c)
 
 int			get_next_line(int fd, char **line)
 {
-	static	char	*buffer = NULL;
-	char			*save;
-	char			*tmp;
-	size_t		i;
-	size_t		ret;
+	char			buffer[BUFFER_SIZE + 1];
+	static	char	*save;
+	char			*dst;
+	int				ret;
+	int				i;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) == -1)
-		return (-1);
-		save = NULL;
-	if (buffer != NULL)
-	{
-		i = -1;
-		if ((ret = ft_verif(buffer, '\n')) == 0)
-		{
-			if (!(save = ft_strjoin(0, buffer)))
-				return (-1);
-		}
-		else
-		{
-			if (!(save = malloc(sizeof(char) * (ret + 1))))
-				return (-1);
-			while (++i < ret)
-				save[i] = buffer[i];
-			save[i] = '\0';
-			i = 0;
-			while (buffer[i + ret])
-			{
-				buffer[i] = buffer[i + ret];
-				i++;
-			}
-			buffer[i] = '\0';
-			*line = save;
-			return (1);
-		}
-	}
-	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
 	while ((ret = read(fd, buffer, BUFFER_SIZE)))
 	{
 		buffer[ret] = '\0';
-		if (ft_verif(buffer, '\n') != 0)
+		if ((save = ft_strjoin(save, buffer)) == 0)
+			return (-1);
+		if ((i = ft_verif(save, '\n')) != 0)
 		{
-			if (!(tmp = malloc(sizeof(char) * (ft_verif(buffer, '\n') + 1))))
+			if (!(dst = malloc(sizeof(char) * (i + 1))))
 				return (-1);
-			i = -1;
-			while (buffer[++i] != '\n')
-				tmp[i] = buffer[i];
-			tmp[i] = '\0';
-			if (*save)
+//write(1, "ok\n", 3);
+			dst[i] = '\0';
+			while (--i >= 0)
+				dst[i] = save[i];
+			while (save[ret])
 			{
-				write(1, "ok\n", 3);
-				if ((tmp = ft_strjoin(tmp, save)) == 0)
-					return (-1);
-			}
-			ret = 0;
-			while (buffer[++i])
-			{
-				buffer[ret] = buffer[i];
+				i++;
 				ret++;
+				save[i] = save[ret];
 			}
-			buffer[ret] = '\0';
-			*line = tmp;
+			save[i] = '\0';
+			*line = dst;
+			printf("Save : - %s \n", save);
+			write(1, "ok\n", 3);
 			return (1);
 		}
-		else
-		{
-			if (!(save = malloc(sizeof(char) * (ret + 1))))
-				return (-1);
-			while (ret >= 0)
-			{
-				save[ret] = buffer[ret];
-				ret--;
-			}
-		}
 	}
-	*line = buffer;
 	return (0);
 }
 
@@ -251,3 +209,4 @@ while ((count = read(fd, buffer, BUFFER_SIZE)))
 /*printf("Buffer : - %s \n", buffer);
 write(1, "ok\n", 3);
 printf("tmp Lecture : - %s \n", tmp);*/
+//printf("Save : - %s \n", save);
