@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/01/12 16:25:11 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/01/13 18:14:09 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			ft_verif(char *buffer, char c)
 		}
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int			get_next_line(int fd, char **line)
@@ -112,33 +112,60 @@ int			get_next_line(int fd, char **line)
 	int				ret;
 	int				i;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) == -1)
+	if (BUFFER_SIZE < 1 || read(fd, 0, 0) == -1)
 		return (-1);
-	while ((ret = read(fd, buffer, BUFFER_SIZE)))
+	while ((ret = read(fd, buffer, BUFFER_SIZE)) != 0)
 	{
 		buffer[ret] = '\0';
 		if ((save = ft_strjoin(save, buffer)) == 0)
 			return (-1);
-		if ((i = ft_verif(save, '\n')) != 0)
+		printf("Save : - %s \n", save);
+		if ((i = ft_verif(save, '\n')) != -1)
 		{
 			if (!(dst = malloc(sizeof(char) * (i + 1))))
 				return (-1);
-//write(1, "ok\n", 3);
 			dst[i] = '\0';
+			ret = i;
 			while (--i >= 0)
 				dst[i] = save[i];
 			while (save[ret])
 			{
-				i++;
-				ret++;
-				save[i] = save[ret];
+				++ret;
+				save[++i] = save[ret];
 			}
 			save[i] = '\0';
 			*line = dst;
-			printf("Save : - %s \n", save);
-			write(1, "ok\n", 3);
 			return (1);
 		}
+	}
+	if (save[0] != '\0')
+	{
+		if ((i = ft_verif(save, '\n')) != -1)
+		{
+			write(1, "ok\n", 3);
+			ret = i;
+			if (!(dst = malloc(sizeof(char) * (i + 1))))
+				return (-1);
+			dst[i] = '\0';
+			while (--i >= 0)
+				dst[i] = save[i];
+			*line = dst;
+			while (save[ret])
+			{
+				++ret;
+				save[++i] = save[ret];
+			}
+			save[i] = '\0';
+			return (1);
+		}
+		i = ft_strlen(save);
+		if (!(dst = malloc(sizeof(char) * (i + 1))))
+			return (-1);
+		dst[i] = '\0';
+		while (--i >= 0)
+			dst[i] = save[i];
+		*line = dst;
+		return (0);
 	}
 	return (0);
 }
@@ -171,41 +198,6 @@ int	main(int ar, char **av)
 	return 0;
 }
 
-/*if (buffer[0] != '\0' && BUFFER_SIZE > 1)
-{
-	if ((count = ft_verif(buffer, '\n')))
-	{
-		while ((++i) < count && buffer[i] != '\n')
-			*line[i] = buffer[i];
-		*line[i] = '\0';
-		if (!(dst = ft_substr(buffer, count)))
-			return (-1);
-		return (1);
-	}
-	save = ft_strjoin(buffer, save);
-}
-while ((count = read(fd, buffer, BUFFER_SIZE)))
-{
-	buffer[count] = '\0';
-	count = ft_verif(buffer, '\n');
-	if (count != 0)
-	{
-		while (++i < count)
-			save[i] =  buffer[i];
-		save[i] = '\0';
-		*line = save;
-		buffer = ft_substr(buffer, count);
-		return (1);
-	}
-	save = ft_strjoin(buffer, save);
-	if (count == -1)
-		return (-1);
-	tmp[count] = '\0';
-	if (!(buffer = ft_strjoin(buffer, dst)))
-		return (-1);
-	if (!(buffer = ft_strjoin(buffer, tmp)))
-		return (-1);
-} *line = save;*/
 /*printf("Buffer : - %s \n", buffer);
 write(1, "ok\n", 3);
 printf("tmp Lecture : - %s \n", tmp);*/
