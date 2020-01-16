@@ -1,22 +1,25 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 17:05:18 by cofoundo          #+#    #+#             */
-/*   Updated: 2019/11/29 17:51:35 by cofoundo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
 
-int	get_next_line(int fd, char **line);
+# define SUCCESS 1
+# define FINISH 0
+# define ERROR -1
+
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <fcntl.h>
+# include <unistd.h>
+
+size_t	ft_strlen(char *s, int gnl);
+int		is_in_s(char c, char *str);
+char	*ft_strjoin_n_free(char *s1, char *s2);
+char	*ft_substr(char *s, unsigned int start, size_t len);
+void	*ft_calloc(size_t count, size_t size);
+int		get_next_line(int fd, char **line);
 
 #endif
