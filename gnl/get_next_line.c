@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/01/16 13:31:27 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/01/18 15:31:45 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <limits.h>
 
 size_t		ft_strlen(char *s)
 {
@@ -106,7 +107,7 @@ int			get_next_line(int fd, char **line)
 	static	char	*save[OPEN_MAX];
 	int				i;
 
-	if (BUFFER_SIZE < 1 || read(fd, 0, 0) == -1)
+	if (BUFFER_SIZE < 1 || read(fd, 0, 0) == -1 || fd == 1 || fd == 2)
 		return (-1);
 	while ((i = read(fd, buffer, BUFFER_SIZE)) != 0)
 	{
@@ -124,6 +125,7 @@ int			get_next_line(int fd, char **line)
 	*line = malloc(1);
 	return ((save[fd] = NULL) == NULL ? 0 : 0);
 }
+
 int	main(int ar, char **av)
 {
 	int fd = 0;
@@ -155,20 +157,3 @@ int	main(int ar, char **av)
 write(1, "ok\n", 3);
 printf("tmp Lecture : - %s \n", tmp);*/
 //printf("Save : - %s \n", save);
-/*if ((i = ft_verif(save, '\n')) != -1)
-{
-	if (!(dst = malloc(sizeof(char) * (i + 1))))
-		return (-1);
-	dst[i] = '\0';
-	ret = i;
-	while (--i >= 0)
-		dst[i] = save[i];
-	while (save[ret])
-	{
-		++ret;
-		save[++i] = save[ret];
-	}
-	save[i] = '\0';
-	*line = dst;
-	return (1);
-}*/
