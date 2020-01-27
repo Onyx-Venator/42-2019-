@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:05:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/01/18 15:31:45 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:46:53 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,90 +66,128 @@ int			ft_verif(char *buffer, char c)
 	while (buffer[i])
 	{
 		if (buffer[i] == c)
-		{
 			return (i);
-		}
 		i++;
 	}
 	return (-1);
 }
 
-int			ft_sale(char **line, char *save, int i)
+char	*ft_eof(char *save, char **line)
 {
-	int		j;
-	char	*dst;
+	int	i;
 
-	if (i != -1 && (j = i) != -1)
-	{
-		if (!(dst = malloc(sizeof(char) * (i + 1))))
-			return (-1);
-		dst[i] = '\0';
-		while (--i >= 0)
-			dst[i] = save[i];
-		while (save[j])
-			save[++i] = save[++j];
-		save[i] = '\0';
-		return ((*line = dst) != NULL ? 1 : 1);
-	}
 	i = ft_strlen(save);
-	if (!(dst = malloc(sizeof(char) * (i + 1))))
-		return (-1);
-	dst[i] = '\0';
+	if (!(*line = malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	(*line)[i] = '\0';
 	while (--i >= 0)
-		dst[i] = save[i];
-	*line = dst;
-	return ((save[0] = '\0') ? 0 : 0);
+		(*line)[i] = save[i];
+	return (*line);
+}
+
+char	*ft_line(char *save, char **line, int i)
+{
+	int	j;
+
+	j = i;
+	if (!(*line = malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	(*line)[i] = '\0';
+	while (--i >= 0)
+		(*line)[i] = save[i];
+	while (save[j])
+		save[++i] = save[++j];
+	save[i] = '\0';
+	return (*line);
 }
 
 int			get_next_line(int fd, char **line)
 {
 	char			buffer[BUFFER_SIZE + 1];
-	static	char	*save[OPEN_MAX];
+	static	char	*save = NULL;
 	int				i;
+	int				j;
 
-	if (BUFFER_SIZE < 1 || read(fd, 0, 0) == -1 || fd == 1 || fd == 2)
+	if (BUFFER_SIZE < 1 || read(fd, 0, 0) == -1 || !line || fd < 0)
 		return (-1);
 	while ((i = read(fd, buffer, BUFFER_SIZE)) != 0)
 	{
 		buffer[i] = '\0';
-		if ((save[fd] = ft_strjoin(save[fd], buffer)) == 0)
+		if (!(save = ft_strjoin(save, buffer)))
 			return (-1);
-		if ((i = ft_verif(save[fd], '\n')) != -1)
-			return (ft_sale(line, save[fd], i));
+		if ((i = ft_verif(save, '\n')) != -1)
+		{
+			j = i;
+			if (!(*line = malloc(sizeof(char) * (j + 1))))
+				return (-1);
+			(*line)[i] = '\0';
+			while (--i >= 0)
+				(*line)[i] = save[i];
+			while (save[j])
+				save[++i] = save[++j];
+			save[i] = '\0';
+			return (1);
+		}
 	}
-	if (save[fd])
+	while ((i = ft_verif(save, '\n')) != -1 && save)
 	{
-		i = ft_verif(save[fd], '\n');
-		return (ft_sale(line, save[fd], i));
+		if (!(*line = ft_line(save, line, i)))
+			return (-1);
+		return (1);
 	}
-	*line = malloc(1);
-	return ((save[fd] = NULL) == NULL ? 0 : 0);
+	if (!(*line = ft_eof(save, line)))
+		return (-1);
+	free(save);
+	save = NULL;
+	return (0);
 }
 
 int	main(int ar, char **av)
 {
 	int fd = 0;
 	int ret = 0;
-	int	i = 0;
 	char *line;
 
 	line = NULL;
-	(void) ar;
-	if (av[2]) {
-		fd = av[2][0];
-	} else {
-		fd = open(av[1], O_RDONLY);
-	}
-	printf("FILE DESCRIPTOR : %d\n---------------------\n", fd);
-	while ((ret = get_next_line(fd, &line)) > 0)
+	int 	i2;
+
+	i2 = 0;
+	if (ar == 1)
 	{
-		printf("%d - %d | %s\n", ret, i, line);
-		free(line);
+		while ((ret = get_next_line(0, &line)) > 0)
+		{
+			printf("%d - %d | %s\n", ret, i2, line);
+			free(line);
+			line = NULL;
+		}
+		printf("%d - %d | %s\n", ret, i2++, line);
+		if (ret <= 0)
+		{
+			free(line);
+			line = NULL;
+		}
+		return (0);
 	}
-	printf("%d - %d | %s\n", ret, i++, line);
-	if (ret <= 0)
-		free(line);
-	system("leaks a.out");
+	for (int i = 1; i < ar; i++)
+	{
+		fd = open(av[i], O_RDONLY);
+			//continue ;
+		printf("FILE DESCRIPTOR : %d\n---------------------\n", fd);
+		while ((ret = get_next_line(fd, &line)) > 0)
+		{
+			printf("%d - %d | %s\n", ret, i, line);
+			free(line);
+			line = NULL;
+		}
+		printf("%d - %d | %s\n", ret, i++, line);
+		if (ret <= 0)
+		{
+			free(line);
+			line = NULL;
+		}
+		close(fd);
+	}
+	//system("leaks a.out");
 	return 0;
 }
 
