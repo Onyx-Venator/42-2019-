@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:37:52 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/01/28 15:39:25 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:35:27 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_eof(char *save, char **line)
 {
@@ -44,7 +44,7 @@ char	*ft_line(char *save, char **line, int i)
 int		get_next_line(int fd, char **line)
 {
 	char			buffer[BUFFER_SIZE + 1];
-	static	char	*save = NULL;
+	static	char	*save[OPEN_MAX];
 	int				i;
 
 	if (BUFFER_SIZE < 1 || read(fd, 0, 0) == -1 || !line || fd < 0)
@@ -52,16 +52,16 @@ int		get_next_line(int fd, char **line)
 	while ((i = read(fd, buffer, BUFFER_SIZE)) != 0)
 	{
 		buffer[i] = '\0';
-		if (!(save = ft_strjoin(save, buffer)))
+		if (!(save[fd] = ft_strjoin(save[fd], buffer)))
 			return (-1);
-		if ((i = ft_verif(save, '\n')) != -1)
-			return ((*line = ft_line(save, line, i)) ? 1 : -1);
+		if ((i = ft_verif(save[fd], '\n')) != -1)
+			return ((*line = ft_line(save[fd], line, i)) ? 1 : -1);
 	}
-	while ((i = ft_verif(save, '\n')) != -1 && save)
-		return ((*line = ft_line(save, line, i)) ? 1 : -1);
-	if (!(*line = ft_eof(save, line)))
+	while ((i = ft_verif(save[fd], '\n')) != -1 && save[fd])
+		return ((*line = ft_line(save[fd], line, i)) ? 1 : -1);
+	if (!(*line = ft_eof(save[fd], line)))
 		return (-1);
-	free(save);
-	save = NULL;
+	free(save[fd]);
+	save[fd] = NULL;
 	return (0);
 }
