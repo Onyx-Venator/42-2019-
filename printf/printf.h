@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 15:24:10 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/02/05 15:29:13 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:03:45 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdarg.h>
 # include <unistd.h>
-//# include "libft.h"
 
 /*
 **flag c
@@ -47,15 +46,22 @@
 
 typedef	struct		t_list
 {
-	int		i;
-	int		j;
-	char	buffer[1024];
+	int		coord_s;
 	int		bin;
+	int		coord_buf;
+	char	buffer[1024];
+	int		count_print;
 	int		count_format;
-	int		save;
-	int		count;
 }					s_list;
 
 int	printf(const char *, ...);
 
 #endif
+
+/*int		i;
+int		j;
+char	buffer[1024];
+int		bin;
+int		count_format;
+int		save;
+int		count;*/

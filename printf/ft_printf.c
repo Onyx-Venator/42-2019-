@@ -6,13 +6,76 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:48:57 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/02/05 15:59:08 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:03:27 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-int	ft_flag(const char *s, s_list *stock)
+int		ft_verif(const char *s, char c, s_list *stock)
+{
+	if (s[stock->coord_s] == c)
+		return (1);
+	return (0);
+}
+
+int		ft_is_num(const char *s, s_list *stock)
+{
+	if (s[stock->coord_s] > '0' && s[stock->coord_s] <= '9')
+		return (1);
+	return (0);
+}
+
+void	ft_atoi(const char *s, s_list *stock)
+{
+	stock->count_format = 0;
+	while (s[stock->coord_s] >= '0' && s[stock->coord_s] <= '9')
+		stock->count_format = stock->count_format * 10 +
+			s[stock->coord_s++] - '0';
+	return ;
+}
+
+int		flag(const char *s, s_list *stock)
+{
+
+	return (0);
+}
+
+void	start_convert(va_list ap, const char *s, s_list *stock)
+{
+	while (!flag(s, stock))
+		check_format(s, stock);
+}
+
+int		ft_printf(const char *s, ...)
+{
+	va_list	ap;
+	s_list	stock;
+
+	stock.coord_s = 0;
+	stock.count_print = 0;
+	while (s[stock.coord_s])
+	{
+		stock.bin = 0;
+		stock.coord_buf = 0;
+		stock.count_buf = 0;
+		if (ft_verif(s, "%", &stock) != 0)
+		{
+			stock.coord_s++;
+			start_convert(ap, s, &stock);
+			write(1, buffer, stock.count_buf);
+		}
+		else
+		{
+			write(1, s[stock.coord_s], 1);
+			stock.coord_s++;
+			stock.count_print++;
+		}
+	}
+	return (stock.count_print);
+}
+
+/*int	ft_flag(const char *s, s_list *stock)
 {
 	if (s[stock->i] == 'c')
 		return (stock->bin += 1);
@@ -50,11 +113,20 @@ void	ft_atoi(const char *s, s_list *stock)
 	return ;
 }
 
-void	ft_wildcard(s_list *stock)
+void ft_count_format(const char *s, s_list *stock)
+{
+	while (ft_is_num(s, stock))
+		ft_atoi(s, stock);
+	return ;
+}
+
+void	ft_wildcard(s_list *stock, const char *s)
 {
 	int	i;
 
 	i = 0;
+	stock->i++;
+	ft_count_format(s, stock);
 	while (++i <= stock->count_format)
 	{
 		stock->buffer[stock->j++] = ' ';
@@ -63,47 +135,13 @@ void	ft_wildcard(s_list *stock)
 	return ;
 }
 
-void	ft_type_left(s_list *stock)
-{
-	int	i;
-
-	if ((stock->bin & TYPE_POINT) == 2048)
-	{
-		ft_point(stock);
-		return ;
-	}
-	i = 0;
-	while (++i <= stock->count_format)
-	{
-		stock->buffer[stock->j++] = ' ';
-		stock->count++;
-	}
-	return ;
-}
-
-void	ft_zero(s_list *stock)
-{
-	int	i;
-
-	if ((stock->bin & TYPE_LEFT) == 512)//rajouter les flags de conversion la flemme la maintenant
-	{
-		ft_type_left(stock);
-		return ;
-	}
-	i = 0;
-	while (++i <= stock->count_format)
-	{
-		stock->buffer[stock->j++] = '0';
-		stock->count++;
-	}
-	return ;
-}
-
-void	ft_point(s_list *stock)
+void	ft_point(s_list *stock, const char *s)
 {
 	int	i;
 
 	i = 0;
+	stock->i++;
+	ft_count_format(s, stock);
 	while (++i <= stock->count_format)
 	{
 		if (stock->buffer[stock->j] == '0')
@@ -120,21 +158,56 @@ void	ft_point(s_list *stock)
 	return ;
 }
 
+void	ft_type_left(s_list *stock, const char *s)
+{
+	int	i;
+
+	if ((stock->bin & TYPE_POINT) == 2048)
+	{
+		ft_point(stock, s);
+		return ;
+	}
+	i = 0;
+	stock->i++;
+	ft_count_format(s, stock);
+	while (++i <= stock->count_format)
+	{
+		stock->buffer[stock->j++] = ' ';
+		stock->count++;
+	}
+	return ;
+}
+
+void	ft_zero(s_list *stock, const char *s)
+{
+	int	i;
+
+	if ((stock->bin & TYPE_LEFT) == 512)//rajouter les flags de conversion la flemme la maintenant
+	{
+		ft_type_left(stock, s);
+		return ;
+	}
+	i = 0;
+	stock->i++;
+	ft_count_format(s, stock);
+	while (++i <= stock->count_format)
+	{
+		stock->buffer[stock->j++] = '0';
+		stock->count++;
+	}
+	return ;
+}
+
 void	ft_format(s_list *stock, const char *s)
 {
-	while (ft_is_num(s, stock))
-	{
-		ft_atoi(s, stock);
-		stock->i++;
-	}
 	if ((stock->bin & WILDCARD) == 256)
-		ft_wildcard(stock);
+		ft_wildcard(stock, s);
 	if ((stock->bin & TYPE_LEFT) == 512)
-		ft_type_left(stock);
+		ft_type_left(stock, s);
 	if ((stock->bin & TYPE_ZERO) == 1024)
-		ft_zero(stock);
+		ft_zero(stock, s);
 	if ((stock->bin & TYPE_POINT) == 2048)
-		ft_point(stock);
+		ft_point(stock, s);
 	return ;
 }
 
@@ -159,9 +232,14 @@ int	ft_bin(const char *s, s_list *stock)
 
 void	ft_convert_c(int ap, s_list *stock)
 {
-	char 	c;
+	unsigned char 	c;
 
 	c = ap;
+	while (stock->buffer[stock->j] == '0' || stock->buffer[stock->j] == ' ')
+		stock->j++;
+	if (stock->buffer[stock->j - 1] == '0'
+		|| stock->buffer[stock->j - 1] == ' ')
+		stock->j--;
 	stock->buffer[stock->j] = c;
 	stock->j++;
 	return ;
@@ -178,10 +256,22 @@ void	ft_putstr(char *s, s_list *stock)
 	return ;
 }
 
-/*void	ft_hexa(long unsigned p, s_list stock)
+void	ft_hexa(void *p, s_list *stock)
 {
+	int			i;
+	long int	j;
+	char		hexa[16];
 
-}*/
+	i = -1;
+	j = 0;
+	hexa = "0123456789abcdef";
+	while(p[++i])
+		j += p[i];
+	while ((j / 16) != 0)
+	{
+
+	}
+}
 
 void	ft_checkflag(va_list ap, s_list *stock)
 {
@@ -189,17 +279,16 @@ void	ft_checkflag(va_list ap, s_list *stock)
 		ft_convert_c(va_arg(ap, int), stock);
 	if ((stock->bin & TYPE_S) == 2)
 		ft_putstr(va_arg(ap, char*), stock);
-	/*if ((stock->bin & TYPE_P) == 4)
-		ft_hexa(va_arg(ap, long unsigned), stock);
-	if ((stock->bin & TYPE_D) == 8) || (stock->bin & TYPE_I) == 16)
+	if ((stock->bin & TYPE_P) == 4)
+		ft_hexa(va_arg(ap, void *), stock);
+	/*if ((stock->bin & TYPE_D) == 8) || (stock->bin & TYPE_I) == 16)
 		stock->buffer[stock->j] = ft_putnbr(va_arg(ap, int));
 	if ((stock->bin & TYPE_U) == 32)
 		stock->buffer[stock->j] = ft_decimalunsigned(va_arg(ap, unsigned int));
 	if ((stock->bin & TYPE_X) == 64)
 		stock->buffer[stock->j] = ft_hexamin(ft_va_arg(ap, unsigned int));
 	if ((stock->bin & BIG_X) == 128)
-		stock->buffer[stock->j] = ft_hexamaj(ft_va_arg(ap, unsigned int));*/
-	//ft_format(stock);
+		stock->buffer[stock->j] = ft_hexamaj(ft_va_arg(ap, unsigned int));
 }
 
 int		ft_printf(const char *s, ...)
@@ -235,4 +324,4 @@ int		ft_printf(const char *s, ...)
 	write(1, stock.buffer, stock.j + 1);
 	//return le nbr de carac affiche
 	return (1);
-}
+}*/
