@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:48:57 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/02/10 16:03:27 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:52:24 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,45 @@ void	ft_atoi(const char *s, s_list *stock)
 	return ;
 }
 
+void	ft_wildcard(const char *s, s_list *stock, int x)
+{
+	int	y;
+
+	y = -1;
+	stock->bin = WILDCARD;
+	stock->coord_s++;
+	stock->count_format = x;
+	while (++y < x)
+	{
+		stock->buffer[stock->coord_buf++] = ' ';
+
+	}
+}
+
+int		check_format(const char *s, s_list *stock, va_list ap)
+{
+	stock->count_format = 0;
+	if (s[stock->coord_s] == '*')
+		ft_wildcard(s, stock, va_arg(ap, int));
+	if (s[stock->coord_s] == '-')
+		ft_type_left(s, stock);
+	if (s[stock->coord_s] == '0')
+		ft_type_zero(s, stock);
+	if (s[stock->coord_s] == '.')
+		ft_type_point(s, stock);
+	return (0);
+}
+
 int		flag(const char *s, s_list *stock)
 {
-
 	return (0);
 }
 
 void	start_convert(va_list ap, const char *s, s_list *stock)
 {
 	while (!flag(s, stock))
-		check_format(s, stock);
+		check_format(s, stock, ap);
+	return ;
 }
 
 int		ft_printf(const char *s, ...)
