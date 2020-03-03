@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:48:57 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/03/02 16:52:24 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:55:19 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ int		ft_is_num(const char *s, s_list *stock)
 	return (0);
 }
 
-void	ft_atoi(const char *s, s_list *stock)
-{
-	stock->count_format = 0;
-	while (s[stock->coord_s] >= '0' && s[stock->coord_s] <= '9')
-		stock->count_format = stock->count_format * 10 +
-			s[stock->coord_s++] - '0';
-	return ;
-}
-
 void	ft_wildcard(const char *s, s_list *stock, int x)
 {
 	int	y;
@@ -52,7 +43,7 @@ void	ft_wildcard(const char *s, s_list *stock, int x)
 
 int		check_format(const char *s, s_list *stock, va_list ap)
 {
-	stock->count_format = 0;
+	/*stock->count_format = 0;
 	if (s[stock->coord_s] == '*')
 		ft_wildcard(s, stock, va_arg(ap, int));
 	if (s[stock->coord_s] == '-')
@@ -60,19 +51,80 @@ int		check_format(const char *s, s_list *stock, va_list ap)
 	if (s[stock->coord_s] == '0')
 		ft_type_zero(s, stock);
 	if (s[stock->coord_s] == '.')
-		ft_type_point(s, stock);
+		ft_type_point(s, stock);*/
 	return (0);
 }
 
-int		flag(const char *s, s_list *stock)
+int		ft_verif_flag(const char *s, s_list *stock)
+{
+	if (s[stock->coord_s] == 'c')
+		return (stock->bin += 1);
+	if (s[stock->coord_s] == 's')
+		return (stock->bin += 1 << 1);
+	if (s[stock->coord_s] == 'p')
+		return (stock->bin += 1 << 2);
+	if (s[stock->coord_s] == 'd')
+		return (stock->bin += 1 << 3);
+	if (s[stock->coord_s] == 'i')
+		return (stock->bin += 1 << 4);
+	if (s[stock->coord_s] == 'u')
+		return (stock->bin += 1 << 5);
+	if (s[stock->coord_s] == 'x')
+		return (stock->bin += 1 << 6);
+	if (s[stock->coord_s] == 'X')
+		return (stock->bin += 1 << 7);
+	return (-1);
+}
+
+int		ft_convert(const char *s, s_list *stock)
 {
 	return (0);
+}
+
+void	ft_count(const char *s, s_list *stock)
+{
+	if ((stock->bin & TYPE_LEFT) == 512 ||
+		(stock->bin & TYPE_ZERO) == 1024)
+	{
+		stock->count_format = 0;
+		while (s[stock->coord_s] >= '0' && s[stock->coord_s] <= '9')
+			stock->count_format = stock->count_format * 10 +
+				s[stock->coord_s++] - '0';
+	}
+	else if ((stock->bin & TYPE_POINT) == 2048)
+	{
+		stock->count_width = 0;
+		while (s[stock->coord_s] >= '0' && s[stock->coord_s] <= '9')
+		stock->count_width = stock->count_width * 10 +
+			s[stock->coord_s++] - '0';
+	}
+	else
+		return ;
+	stock->coord_s--;
+	return;
+}
+
+void	ft_parse(const char *s, s_list *stock)
+{
+	while (ft_verif_convert(s, stock) = -1)
+	{
+		if (s[stock->coord_s] == '*')
+			stock->bin += 1 << 8;
+		if (s[stock->coord_s] == '-')
+			stock->bin += 1 << 9;
+		if (s[stock->coord_s] == '0')
+			stock->bin += 1 << 10;
+		if (s[stock->coord_s] == '.')
+			stock->bin += 1 << 11;
+		if (s[stock->coord_s] >= '1' && s[stock->coord_s] <= '9')
+			ft_count(s, stock);
+		stock->coord_s++;
+	}
 }
 
 void	start_convert(va_list ap, const char *s, s_list *stock)
 {
-	while (!flag(s, stock))
-		check_format(s, stock, ap);
+	ft_parse(s, stock);
 	return ;
 }
 
@@ -88,7 +140,9 @@ int		ft_printf(const char *s, ...)
 		stock.bin = 0;
 		stock.coord_buf = 0;
 		stock.count_buf = 0;
-		if (ft_verif(s, "%", &stock) != 0)
+		stock.count_width = 0;
+		stock.count_format = 0;
+		if (ft_verif(s, '%', &stock) != 0)
 		{
 			stock.coord_s++;
 			start_convert(ap, s, &stock);

@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 15:24:10 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/02/10 16:03:45 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:55:17 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef	struct		t_list
 	char	buffer[1024];
 	int		count_print;
 	int		count_format;
+	int		count_width;
 }					s_list;
 
 int	printf(const char *, ...);
