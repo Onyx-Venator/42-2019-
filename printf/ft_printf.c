@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:48:57 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/03/12 20:38:32 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/05/25 17:29:54 by onix             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -409,8 +409,6 @@ void			p_with_precision(unsigned long x, s_list *stock)
 	return ;
 }
 
-
-
 void			ft_convert_p(unsigned long x, s_list *stock)
 {
 	stock->conv_len = fact_unsigned(16, x);
@@ -453,6 +451,89 @@ int				fact(int x, int y)
 	return (i);
 }
 
+void			ft_putnbr(int x, s_list *stock)
+{
+	char 		str[stock->conv_len];
+	long		i;
+	int			j;
+
+	i = x;
+	j = stock->conv_len - 1;
+	if (i < 0)
+	{
+		str[0] = '-';
+		i -= 1;
+	}
+	while (i != 0)
+	{
+		str[j--] = i%10;
+		i /= 10;
+	}
+	while (j < stock->conv_len)
+	{
+		add_to_buff(stock, str[j]);
+		j++;
+	}
+	return ;
+}
+
+void			precision_d(int x, s_list *stock)
+{
+	int			y;
+
+	y = stock->count_precision - stock->conv_len + 1;
+	while (--y > 0)
+		add_to_buff(stock, '0');
+	ft_putnbr(x, stock);
+	return ;
+}
+
+void			format_d(s_list *stock)
+{
+	int			x;
+
+	if (stock->count_precision > stock->conv_len)
+		x = stock->count_format - stock->count_precision + 1;
+	else
+		s = stock->count_format - stock->conv_len + 1;
+	while (--x > 0)
+		add_to_buff(stock, ' ');
+	return ;
+}
+
+void			d_precision(int x, s_list *stock)
+{
+	ft_flag_zero(stock);
+	if (x == 0 && stock->count_precision =< 0)
+	{
+		format_d(x, stock);
+		return ;
+	}
+	if (stock->count_precision >= stock->count_format ||
+			stock->conv_len >= stock->count_format)
+			precision_d(x, stock);
+	else
+	{
+		if ((stock->bin & TYPE_ZERO) == TYPE_ZERO)
+			format_d(stock);
+		precision_d(x, stock);
+		ft_putnbr(x, stock);
+		if ((stockk->bin & TYPE_LEFT) == TYPE_LEFT)
+			format_d(stock);
+	}
+	return ;
+}
+
+void			d_less_precision(int x, s_list *stock)
+{
+	if ((stock->bin & TYPE_POINT) == TYPE_POINT)
+		format_d(stock);
+	ft_putnbr(x, stock);
+	if ((stock->bin & TYPE_LEFT) == TYPE_LEFT)
+		format_d(stock);
+	return ;
+}
+
 void			ft_convert_d(int x, s_list *stock)
 {
 	stock->conv_len = fact(x, 10);
@@ -464,6 +545,115 @@ void			ft_convert_d(int x, s_list *stock)
 }
 
 /******************************************************************************/
+
+void			ft_convert_u(unsigned int x, s_list *stock)
+{
+	(int)x;
+	ft_convert_d(x, stock);
+	return ;
+}
+
+/******************************************************************************/
+
+int 			fact_ui(unsigned int x, int y)
+{
+	int			i;
+	int			j;
+
+	i = x;
+	j = 0;
+	if (i == 0)
+		return (1);
+	while (i != 0)
+	{
+		i /= y;
+		j++;
+	}
+	return (j);
+}
+
+void			add_zero_x(s_list *stock)
+{
+	while (stock->conv_len++ < stock->count_precision)
+		add_to_buff(stock, '0');
+	return ;
+}
+
+void 			x_less_precision(unsigned long x, s_list *stock, char *str)
+{
+	if ((stock->bin & TYPE_LEFT) ==  TYPE_LEFT)
+	{
+		ft_utoa_base_x(x, stock, str);
+		ft_apply_width(stock);
+	}
+	else
+	{
+		if((stock->bin & TYPE_ZERO) == TYPE_ZERO)
+		{
+			ft_apply_width(stock);
+			ft_utoa_base_x(x, stock, str);
+			return ;
+		}
+		ft_apply_width(stock);
+		ft_utoa_base_x(x, stock, str);
+	}
+	return ;
+}
+
+void			x_precision_less_left(unsigned int x, s_list *stock, char *str)
+{
+	int		y;
+
+	y = stock->conv_len;
+	stock->conv_len = stock->count_precision;
+	ft_apply_width(stock);
+	while (y++ < stock->count_precision)
+		add_to_buff(stock, '0');
+	ft_utoa_base_p(x, stock, str);
+	return ;
+}
+
+void			x_with_precision(unsigned int x, s_list *stock, char *str)
+{
+	if (stock->count_precision >= stock->count_format)
+	{
+		add_zero_x(stock);
+		ft_utoa_base_x(x, stock, str);
+	}
+	else if ((stock->bin & TYPE_LEFT) == TYPE_LEFT)
+	{
+		add_zero_p(stock);
+		ft_utoa_base_x(x, stock, str);
+		ft_apply_width(stock);
+	}
+	else
+		x_precision_less_left(x, stock, str);
+	return ;
+}
+
+void 			ft_convert_x(unsigned int x, s_list *stock, char *str)
+{
+	stock->conv_len = fact_ui(x, 16);
+	if ((stock->bin & TYPE_POINT) == TYPE_POINT)
+	{
+		ft_flag_zero(stock);
+		if (stock->count_precision == 0 && x == 0)
+		{
+			ft_apply_width(stock);
+			return ;
+		}
+		if (stock->conv_len < stock->count_precision)
+			x_with_precision(x, stock, str);
+		else
+			x_less_precision(x, stock, str);
+	}
+	else
+		x_less_precision(x, stock, str);
+	return ;
+}
+
+/******************************************************************************/
+
 void			ft_flag(va_list ap, const char *s, s_list *stock)
 {
 	(void)s;
@@ -475,14 +665,14 @@ void			ft_flag(va_list ap, const char *s, s_list *stock)
 		ft_convert_p((unsigned long)va_arg(ap, unsigned long*), stock);
 	if ((stock->bin & TYPE_D) == TYPE_D)
 		ft_convert_d(va_arg(ap, int), stock);
-	/*if ((stock->bin & TYPE_I) == TYPE_I)
-		ft_convert_i();
+	if ((stock->bin & TYPE_I) == TYPE_I)
+		ft_convert_d(va_arg(ap, int), stock);
 	if ((stock->bin & TYPE_U) == TYPE_U)
-		ft_convert_u();
+		ft_convert_u(va_arg(ap, unsigned int), stock);
 	if ((stock->bin & TYPE_X) == TYPE_X)
-		ft_convert_x();
+		ft_convert_x(va_arg(ap, unsigned int), stock, "0123456789abcdef");
 	if ((stock->bin & BIG_X) == BIG_X)
-		ft_big_x();*/
+		ft_convert_x(va_arg(ap, unsigned int), stock, "0123456789ABCDEF");
 	return ;
 }
 

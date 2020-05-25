@@ -10,5 +10,5 @@ int main()
 	char *s2;
 
 	s[0] = 'a';
-	printf("%-.20d", 1);
+	printf("%04x", 0);
 }
