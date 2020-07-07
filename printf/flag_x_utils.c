@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 19:10:30 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/06/16 19:28:48 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/06/23 20:30:33 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		fact_ui(unsigned int x, int y)
 {
-	int			i;
-	int			j;
+	unsigned int			i;
+	int						j;
 
 	i = x;
 	j = 0;
@@ -33,5 +33,6 @@ void	add_zero_x(t_list *stock)
 {
 	while (stock->conv_len++ < stock->count_precision)
 		add_to_buff(stock, '0');
+	stock->conv_len--;
 	return ;
 }

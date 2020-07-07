@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 18:22:54 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/06/19 16:48:25 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/06/24 17:53:01 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	wildcard(int x, t_list *stock, char const *s)
 		stock->bin &= ~(1 << 8);
 		stock->count_precision = x;
 		if (x < 0)
+			stock->bin &= ~(1 << 11);
+		else if (x < 0)
 		{
 			stock->count_precision *= -1;
 			stock->bin &= ~(1 << 8);
@@ -52,6 +54,7 @@ void	wildcard(int x, t_list *stock, char const *s)
 		{
 			stock->count_format *= -1;
 			stock->bin |= 1 << 9;
+			stock->bin &= ~(1 << 10);
 		}
 	}
 	return ;

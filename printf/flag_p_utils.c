@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 18:48:07 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/06/16 19:28:01 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/06/24 16:49:04 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void			add_zero_p(t_list *stock)
 {
-	while (stock->conv_len++ < stock->count_precision)
+	int				y;
+
+	y = stock->conv_len - 2;
+	while (y++ < stock->count_precision)
 		add_to_buff(stock, '0');
 	return ;
 }
@@ -26,6 +29,8 @@ unsigned long	fact_unsigned(unsigned long y, unsigned long x)
 
 	i = 0;
 	j = x;
+	if (j == 0)
+		i = 1;
 	while (j > 0)
 	{
 		i++;

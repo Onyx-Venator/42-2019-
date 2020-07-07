@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 18:05:09 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/06/22 14:01:40 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/06/24 17:41:41 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_apply_width_percent(t_list *stock)
 	{
 		while (++x < (stock->count_format - stock->conv_len))
 			add_to_buff(stock, '0');
-			add_to_buff(stock, '%');
+		add_to_buff(stock, '%');
 	}
 	else if ((stock->bin & TYPE_LEFT) == TYPE_LEFT)
 	{
@@ -50,7 +50,7 @@ void	ft_apply_width_percent(t_list *stock)
 	{
 		while (++x < (stock->count_format - stock->conv_len))
 			add_to_buff(stock, ' ');
-			add_to_buff(stock, '%');
+		add_to_buff(stock, '%');
 	}
 }
 
@@ -70,7 +70,6 @@ void	ft_apply_width(t_list *stock)
 	}
 	else
 	{
-
 		while (++x < (stock->count_format - stock->conv_len))
 			add_to_buff(stock, ' ');
 	}

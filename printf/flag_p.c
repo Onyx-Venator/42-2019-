@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 18:50:10 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/06/16 19:28:14 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/06/24 16:53:03 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,11 @@ void	p_less_precision(unsigned long x, t_list *stock)
 
 void	p_precision_less_left(unsigned long x, t_list *stock)
 {
-	int		y;
-
-	y = stock->conv_len;
-	stock->conv_len = stock->count_precision;
+	if (stock->conv_len < stock->count_precision)
+		stock->conv_len = stock->count_precision;
 	ft_apply_width(stock);
 	add_ox(stock);
-	while (y++ < stock->count_precision)
-		add_to_buff(stock, '0');
+	add_zero_p(stock);
 	ft_utoa_base_p(x, stock, "0123456789abcdef");
 }
 
@@ -89,10 +86,12 @@ void	p_with_precision(unsigned long x, t_list *stock)
 
 void	ft_convert_p(unsigned long x, t_list *stock)
 {
-	stock->conv_len = fact_unsigned(16, x);
+	stock->conv_len = fact_unsigned(16, x) + 2;
 	if ((stock->bin & TYPE_POINT) == TYPE_POINT)
 	{
-		if (x == 0 && stock->count_precision == -1)
+		if (x == 0 && stock->count_precision < 0)
+			stock->conv_len--;
+		if (x == 0 && stock->count_precision <= 0)
 		{
 			precision_neg_p(stock);
 			return ;

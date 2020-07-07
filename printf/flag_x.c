@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 19:11:29 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/06/16 19:28:59 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/06/23 20:32:36 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	x_with_precision(unsigned int x, t_list *stock, char *str)
 	}
 	else if ((stock->bin & TYPE_LEFT) == TYPE_LEFT)
 	{
-		add_zero_p(stock);
+		add_zero_x(stock);
 		ft_utoa_base_x(x, stock, str);
 		ft_apply_width(stock);
 	}
@@ -94,8 +94,9 @@ void	ft_convert_x(unsigned int x, t_list *stock, char *str)
 	if ((stock->bin & TYPE_POINT) == TYPE_POINT)
 	{
 		ft_flag_zero(stock);
-		if (stock->count_precision == 0 && x == 0)
+		if (stock->count_precision <= 0 && x == 0)
 		{
+			stock->conv_len = 0;
 			ft_apply_width(stock);
 			return ;
 		}
