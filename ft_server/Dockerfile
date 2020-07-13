@@ -32,8 +32,8 @@ COPY srcs/nginx.conf /ect/nginx/sites-available/localhost
 EXPOSE 80 443
 
 COPY srcs/wp.sql /tmp/wp.sql
-CMD service nginx start \
-	&& service php7.4-fpm start \
+CMD #service nginx start \
+	#&& service php7.3-fpm start \
 	&& service mysql start \
 	&& mysql -u root < /tmp/wp.sql \
-	&& sh
+	&& bash exec.sh
