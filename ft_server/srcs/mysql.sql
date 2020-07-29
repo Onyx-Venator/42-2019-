@@ -1,4 +1,4 @@
-CREATE USER 'wp_user'@localhost IDENTIFIED BY 'wp_user';
 CREATE DATABASE wp_bdd;
-GRANT ALL PRIVILEGES on wp.* to 'wp_user'@localhost;
+GRANT ALL PRIVILEGES on wp_bdd.* TO 'root'@localhost;
 FLUSH PRIVILEGES;
+update mysql.user set plugin = 'mysql_native_password' where user='root';
