@@ -25,6 +25,7 @@ RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/localhos
 COPY srcs/exec.sh /
 COPY srcs/mysql.sql /tmp/mysql.sql
 COPY srcs/check.sh /
+COPY srcs/wp_bdd.sql /tmp/wp_bdd.sql
 
 RUN chown -R www-data:www-data /var/www/html/*
 RUN chown 755 -R /var/www/html/*
@@ -32,9 +33,8 @@ RUN chmod 777 -R /var/www/html/wordpress
 
 COPY srcs/wp-config.php /var/www/html/localhost/wordpress/wp-config.php
 
-RUN service mysql start && mysql -u root mysql < /tmp/mysql.sql
+RUN service mysql start && mysql -u root mysql < /tmp/mysql.sql && mysql wp_bdd -u root --password= < /tmp/wp_bdd.sql
 
 EXPOSE 80 443
 
-CMD bash check.sh
 CMD bash exec.sh
