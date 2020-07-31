@@ -1,4 +1,4 @@
-if [ 1 ]
+if [ $1 = "0" ]
 then
 mv /tmp/nginxoff.conf /tmp/nginx.conf
 else
