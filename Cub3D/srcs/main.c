@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/08/27 16:03:39 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/09/02 16:26:51 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		main(int ac, char **av)
 		write(0, "error during ft_strjoin.\n", 25);
 		return ;
 	}
-	if (!(ft_parse(&parse)))
+	if (ft_parse(&parse) == -1)
 		return ;
 	return ;
 }

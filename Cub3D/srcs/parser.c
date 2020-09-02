@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 16:32:45 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/08/31 16:05:48 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/09/02 16:44:18 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,57 @@
 ** S texture du sprite
 */
 
-void	ft_resolution(t_list *parse, long x)
+int		ft_color(t_list *parse, int x)
 {
 	int	sign;
 
 	sign = 0;
-	parse->i_save++;
-	while (parse->save[parse->i_save] == ' ')
-		parse->i_save++;
 	while (parse->save[parse->i_save] == '-')
 		sign++;
+	if (sign % 2 != 0)
+		return (-1);
 	while (parse->save[parse->i_save] >= '0' &&
 		parse->save[parse->i_save] <= '9')
 	x = x * 10 + parse->save[parse->i_save++] - '0';
+	if (x > 255)
+		return (-1);
+	return (1);
+}
+
+int		ft_floor_color(t_list *parse)
+{
+	int	count;
+
+	count = 0;
+	while (pase->save[parse->i_save] == 'F' || pase->save[parse->i_save] == ' ')
+		parse->i_save++;
+	if (ft_color(parse, parse->f_r) == -1)
+		return (-1);
+	if (ft_color(parse, parse->f_g) == -1)
+		return (-1);
+	if (ft_color(parse, parse->f_b) == -1)
+		return (-1);
+	return (1);
+}
+
+int		ft_resolution(t_list *parse, long x, int y)
+{
+	int	sign;
+
+	sign = 0;
+	while (parse->save[parse->i_save] == ' ' ||
+		parse->save[parse->i_save] == 'R')
+		parse->i_save++;
+	while (parse->save[parse->i_save] == '-')
+		sign++;
 	if (sign % 2 != 0)
-		x *= -1;
-	return ;
+		return (-1);
+	while (parse->save[parse->i_save] >= '0' &&
+		parse->save[parse->i_save] <= '9')
+	x = x * 10 + parse->save[parse->i_save++] - '0';
+	if (x > y)
+		x = y;
+	return (1);
 }
 
 void	ft_texture(t_list *parse)
@@ -63,19 +98,26 @@ int		ft_parse(t_list *parse)
 			if (ft_map(parse) == -1)
 			{
 				write(0, "error in malloc map.\n", 21);
-				return ;
+				return (-1);
 			}
 			if (ft_check_map(parse) == -1)
 			{
 				write(0, "map is not valide.\n", 19);
-				return ;
+				return (-1);
 			}
 		}
 		if (parse->save[parse->i_save] == 'R')
 		{
-			parse->bin |= 1 << 2;
-			ft_resolution(parse, parse->r_x);
-			ft_resolution(parse, parse->r_y);
+			if (ft_resolution(parse, parse->r_x, 1920) == -1)
+			{
+				write(0, "resolution x is not valide.\n", 28);
+				return (-1);
+			}
+			if (ft_resolution(parse, parse->r_y, 1080))
+			{
+				write(0, "resolution y is not valide.\n", 28);
+				return (-1);
+			}
 		}
 		ft_texture(parse);
 		if (parse->save[parse->i_save] == 'F')

@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:22:23 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/09/01 15:07:40 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/09/02 16:39:04 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct	s_list
 	int			c_r;
 	int			c_g;
 	int			c_b;
-	int		i_save;
-	int		i_map;
+	int			i_save;
+	int			i_map;
 	char		*save;
 	char		*map;
 	int			spawn;
@@ -61,5 +61,7 @@ int		ft_check_map(t_list *parse);
 int		ft_check_stend(t_list *parse, int i);
 int		ft_first_line(t_list *parse, int tmp);
 int		ft_prev_end(t_list *parse, int tmp);
+int		ft_resolution(t_list *parse, long x, int y);
+int		ft_color(t_list *parse, int x);
 
 #endif
