@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:20:36 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/08/18 16:53:24 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/08/25 14:12:40 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,15 @@ int		ft_get_next_line(t_list *parse, char *config)
 	char	buffer[1024];
 
 	i = -1;
-	fd = open("map.cub", O_RDONLY);
+	fd = open(config, O_RDONLY);
 	if (!ft_fd_error(fd))
 		return (0);
-	while(i = read(fd, buffer, 1023) != 0)
+	while (i = read(fd, buffer, 1023) != 0)
 	{
 		buffer[i] = '\0';
-		if (!(parse->save = ft_strjoin(parse->save, buffer)))
+		if (!ft_strjoin(parse->save, buffer))
 			return (-1);
 	}
-	if (i == 0)
-	{
-		if (!(parse->save = ft_strjoin(parse->save, buffer)))
-			return (-1);
-	}
+	ft_srjoin(parse->save, buffer);
 	return (1);
 }

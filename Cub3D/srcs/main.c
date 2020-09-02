@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/08/18 17:04:20 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/08/27 16:03:39 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	ft_init_t_parse(t_list *parse)
 	parse->c_g = 0;
 	parse->c_b = 0;
 	parse->i_save = 0;
-	save = NULL;
+	parse->i_map = 0;
+	parse->spawn = 0;
+	parse->save = NULL;
+	parse->map = NULL;
 	return ;
 }
 
@@ -38,7 +41,7 @@ int		main(int ac, char **av)
 		return ;
 	if (i == -1)
 	{
-		write(0, "error during ft_strjoin\n", 24);
+		write(0, "error during ft_strjoin.\n", 25);
 		return ;
 	}
 	if (!(ft_parse(&parse)))
