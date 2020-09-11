@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:22:23 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/09/02 16:39:04 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/09/10 15:24:41 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@
 # define MAP 2
 # define RESOLUTION 4
 
+typedef struct	s_mlx
+{
+	void		*ptr;
+}				t_mlx;
+
 typedef struct	s_list
 {
 	int			bin;
@@ -46,15 +51,21 @@ typedef struct	s_list
 	char		*save;
 	char		*map;
 	int			spawn;
-}				t_liste;
+	char		*nort_path;
+	char		*south_path;
+	char		*west_path;
+	char		*east_path;
+	char		*sprite_path;
+}				t_list;
 
 int		main(int ac, char **av);
-int		ft_init_parse(t_list *parse);
+void	ft_init_struct(t_list *parse, t_mlx *mlx);
+int		ft_init_parse(t_list *parse;
 int		ft_get_next_line(t_list *parse, char *config);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_fd_error(int fd);
 size_t	ft_strlen(char *s);
-int		ft_parse(t_list *parse);
+int		ft_parse(t_list *parse, t_mlx *mlx);
 int		ft_map(t_list *parse);
 int		ft_exit_parse_map(t_list *parse, int tmp);
 int		ft_check_map(t_list *parse);
@@ -63,5 +74,12 @@ int		ft_first_line(t_list *parse, int tmp);
 int		ft_prev_end(t_list *parse, int tmp);
 int		ft_resolution(t_list *parse, long x, int y);
 int		ft_color(t_list *parse, int x);
+int		ft_ceiling_color(t_list *parse);
+int		ft_floor_color(t_list *parse);
+int		norm_map(t_list *parse);
+int		norm_reso(t_list *parse);
+int		norm_color(t_list *parse);
+int		texture(t_list *parse, t_mlx *mlx);
+int		texture_next(t_list *parse, t_mlx *mlx);
 
 #endif
