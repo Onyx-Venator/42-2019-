@@ -6,13 +6,13 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 16:32:45 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/09/10 15:21:33 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/09/23 19:10:40 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_resolution(t_list *parse, long x, int y)
+int		ft_resolution(t_list *parse, int x, int y)
 {
 	int	sign;
 
@@ -62,7 +62,7 @@ int		norm_reso(t_list *parse)
 	return (1);
 }
 
-int		norm_color(t_lit *parse)
+int		norm_color(t_list *parse)
 {
 	if (parse->save[parse->i_save] == 'F')
 	{

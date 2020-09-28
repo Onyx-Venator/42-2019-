@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 15:10:46 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/08/31 18:27:08 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/09/19 12:30:09 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		ft_check_stend(t_list *parse, int i)
 {
-	int j
+	int j;
 
-	i;
+	j = i;
 	while (parse->save[j++] != '\n')
 		;
 	while (i <= j)

@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/31 17:30:37 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/09/01 15:13:51 by cofoundo         ###   ########.fr       */
+/*   Updated: 2020/09/19 13:07:00 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_check_line(t_list *parse, int tmp)
 		if (parse->map[tmp] == '0')
 		{
 			if (parse->map[tmp - parse->i_map] == ' '
-				|| parse->map[tmp - 1] == ' ' || parseparse->map[tmp + 1])
+				|| parse->map[tmp - 1] == ' ' || parse->map[tmp + 1])
 				return (-1);
 		}
 		tmp++;
