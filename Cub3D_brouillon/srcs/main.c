@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/10/20 11:51:26 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/10/26 11:43:09 by onix             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ void	init_mlx(t_list *all)
 	return ;
 }
 
+void	init_utils(t_list *all)
+{
+	all->utils.res_x = 0;
+	all->utils.res_y = 0;
+	return ;
+}
+
 void	ft_init_struct(t_list *all)
 {
 	all->bin = 0;
@@ -41,6 +48,7 @@ void	ft_init_struct(t_list *all)
 	init_img(all);
 	init_win(all);
 	init_mlx(all);
+	init_utils(all);
 	return ;
 }
 
@@ -50,6 +58,7 @@ int		main(int ac, char **av)
 	t_mlx		mlx;
 	t_win		win;
 	t_img		img;
+	t_utils	utils;
 	int			i;
 
 	if (ac != 2 && ac != 3)
@@ -69,7 +78,7 @@ int		main(int ac, char **av)
 			write(0, "error during ft_strjoin.\n", 25);
 		return (-1);
 	}
-	if (ft_parse(&all) == -1)
+	if (init_parse(&all) < 0)
 		return (-1);
 	if (ft_print(&all) == -1)
 		return (-1);
