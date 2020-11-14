@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:22:23 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/11/02 14:11:58 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/11/14 09:22:57 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef	struct		s_utils
 	int							res_y;
 	unsigned int		*north_path;
 	unsigned int		*south_path;
+	int							floor_color;
 }									t_utils;
 
 typedef struct		s_list
@@ -90,5 +91,6 @@ void		check_res(t_list *all);
 int			parse_no(char *str, int i , t_list *all);
 int			parse_so(char *str, int i , t_list *all);
 int			check_texture(char *path, unsigned int **adr, t_list *all);
+int			parse_color(char *str, int i, t_list *all, int color);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/11/02 14:22:05 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/11/14 09:15:38 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init_utils(t_list *all)
 	all->utils.res_y = 0;
 	all->utils.north_path = 0;
 	all->utils.south_path = 0;
+	all->utils.floor_color = 0;
 	return ;
 }
 
