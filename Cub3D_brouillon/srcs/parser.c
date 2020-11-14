@@ -6,33 +6,11 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/10/27 17:14:20 by onix             ###   ########.fr       */
+/*   Updated: 2020/11/14 09:09:13 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int parse_no(char *str, int i, t_list *all)
-{
-  char  *tmp;
-  int   j;
-
-  i += 2;
-  while (str[i] == ' ')
-    i++;
-  j = i;
-  while (str[j] != ' ' && str[j] != '\n')
-    j++;
-  if (!(tmp = malloc(sizeof(char) * (j - i + 1))))
-    return (-2);
-  tmp[j - i] = '\0';
-  j = 0;
-  while (str[i] != ' ' && str[i] != '\n')
-    tmp[j++] = str[i++];
-  if (check_texture(tmp, all->utils.north_path) < 0)
-    return (-2);
-  return (i);
-}
 
 int check_c(char *str, int i, t_list *all)
 {
@@ -48,6 +26,17 @@ int check_c(char *str, int i, t_list *all)
     if ((i = parse_no(str, i, all)) < 0)
       parser_error(i);
   }
+  if (str[i] == 'S' && str[i + 1] == 'O' && i >= 0)
+  {
+    all->bin |= 1 << 3;
+    if ((i = parse_so(str, i, all)) < 0)
+      parser_error(i);
+  }
+  if (str[i] == 'F' && i >= 0)
+  {
+    if ((i = parse_color(str, i, all, &all->utils.floor_color)) < 0)
+      parser_error(i);
+  }
   return (i);
 }
 
@@ -59,6 +48,8 @@ int init_parse(t_list *all)
   while (all->save[i] && i >= 0)
   {
     i = check_c(all->save, i, all);
+    if (i < 0)
+      return (i);
     i++;
   }
   return (i);

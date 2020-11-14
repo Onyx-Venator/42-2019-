@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:22:23 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/10/27 17:14:16 by onix             ###   ########.fr       */
+/*   Updated: 2020/11/02 14:11:58 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef	struct		s_utils
 	int							res_x;
 	int							res_y;
 	unsigned int		*north_path;
+	unsigned int		*south_path;
 }									t_utils;
 
 typedef struct		s_list
@@ -87,5 +88,7 @@ void		parser_error(int i);
 int			ft_atoi(char *str, int i, t_list *all);
 void		check_res(t_list *all);
 int			parse_no(char *str, int i , t_list *all);
+int			parse_so(char *str, int i , t_list *all);
+int			check_texture(char *path, unsigned int **adr, t_list *all);
 
 #endif
