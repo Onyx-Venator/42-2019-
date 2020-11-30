@@ -6,27 +6,11 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/11/14 09:56:59 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/11/30 09:03:33 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int parse_color(char *str, int i, t_list *all, int color)
-{
-  int error;
-  int tmp;
-
-  if (str[i] == 'F')
-    error = -4;
-  if (str[i] == 'C')
-    error = -5;
-  i++;
-  while (str[i] == ' ')
-    i++;
-  tmp = 0;
-  return (i);
-}
 
 int check_c(char *str, int i, t_list *all)
 {
@@ -52,6 +36,12 @@ int check_c(char *str, int i, t_list *all)
   {
     all->bin |= 1 << 4;
     if ((i = parse_color(str, i, all, &all->utils.floor_color)) < 0)
+      parser_error(i);
+  }
+  if (str[i] == 'C' && i >= 0)
+  {
+    all->bin |= 1 << 5;
+    if ((i = parse_color(str, i, all, &all->utils.ceiling_color)) < 0)
       parser_error(i);
   }
   return (i);
