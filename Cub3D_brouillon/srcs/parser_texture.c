@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 14:20:48 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/11/02 14:24:23 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/12/07 15:47:04 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,75 @@ int parse_so(char *str, int i, t_list *all)
     tmp[j++] = str[i++];
   if (check_texture(tmp, &all->utils.south_path, all) < 0)
     return (-3);
+  free(tmp);
+  return (i);
+}
+
+int parse_sprite(char *str, int i, t_list *all)
+{
+  char *tmp;
+  int  j;
+
+  i++;
+  while (str[i] == ' ')
+    i++;
+  j = i;
+  while (str[j] != ' ' && str[j] != '\n')
+    j++;
+  if (!(tmp = malloc(sizeof(char) * (j - i + 1))))
+    return (-6);
+  tmp[j - i] = '\0';
+  j = 0;
+  while (str[i] != ' ' && str[i] != '\n')
+    tmp[j++] = str[i++];
+  if (check_texture(tmp, &all->utils.sprite_path, all) < 0)
+    return (-6);
+  free(tmp);
+  return (i);
+}
+
+int parse_we(char *str, int i, t_list *all)
+{
+  char  *tmp;
+  int   j;
+
+  i += 2;
+  while (str[i] == ' ')
+    i++;
+  j = i;
+  while (str[j] != ' ' && str[j] != '\n')
+    j++;
+  if (!(tmp = malloc(sizeof(char) * (j - i + 1))))
+    return (-7);
+  tmp[j - i] = '\0';
+  j = 0;
+  while (str[i] != ' ' && str[i] != '\n')
+    tmp[j++] = str[i++];
+  if (check_texture(tmp, &all->utils.west_path, all) < 0)
+    return (-7);
+  free(tmp);
+  return (i);
+}
+
+int parse_ea(char *str, int i, t_list *all)
+{
+  char  *tmp;
+  int   j;
+
+  i += 2;
+  while (str[i] == ' ')
+    i++;
+  j = i;
+  while (str[j] != ' ' && str[j] != '\n')
+    j++;
+  if (!(tmp = malloc(siweof(char) * (j - i + 1))))
+    return (-8);
+  tmp[j - i] = '\0';
+  j = 0;
+  while(str[i] != ' ' && str[i] != '\n')
+    tmp[j++] = str[i++];
+  if (check_texture(tmp, &all->utils.east_path, all) < 0)
+    return (-7);
   free(tmp);
   return (i);
 }

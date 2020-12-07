@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/11/30 09:03:33 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/12/07 15:36:04 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int check_c(char *str, int i, t_list *all)
 {
   if (str[i] == 'R' && i >= 0)
   {
-    all->bin |= 1 << 2;
+    all->bin |= 1 << 1;
     if ((i = parse_res(str, i, all)) < 0)
       parser_error(i);
   }
   if (str[i] == 'N' && str[i + 1] == 'O' && i >= 0)
   {
-    all->bin |= 1 << 3;
+    all->bin |= 1 << 2;
     if ((i = parse_no(str, i, all)) < 0)
       parser_error(i);
   }
@@ -42,6 +42,24 @@ int check_c(char *str, int i, t_list *all)
   {
     all->bin |= 1 << 5;
     if ((i = parse_color(str, i, all, &all->utils.ceiling_color)) < 0)
+      parser_error(i);
+  }
+  if (str[i] == 'S' && str[i + 1] != 'O' && i >= 0)
+  {
+    all->bin |= 1 << 6;
+    if ((i = parse_sprite(str, i, all)) < 0)
+      parser_error(i);
+  }
+  if (str[i] == 'W' && str[i + 1] == 'E' && i >= 0)
+  {
+    all->bin |= i << 7;
+    if ((i = parse_we(str, i, all)) < 0)
+      parser_error(i);
+  }
+  if (str[i] == 'E' && str[i + 1] == 'A' && i >= 0)
+  {
+    all->bin |= i << 8;
+    if ((i = parse_ea(str, i, all)) < 0)
       parser_error(i);
   }
   return (i);

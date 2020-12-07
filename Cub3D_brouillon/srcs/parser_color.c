@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 09:00:30 by anonymou          #+#    #+#             */
-/*   Updated: 2020/11/30 09:03:26 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/12/07 15:04:57 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int parse_color(char *str, int i, t_list *all, int color)
   {
     while (str[i] == ' ')
       i++;
+    if (str[i] < '0' || str > '9')
+      return (error);
     if ((color = color(str, i, color) < 0))
       return (error);
   }
