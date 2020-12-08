@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:22:23 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/12/07 15:34:09 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/12/08 14:49:09 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef	struct		s_utils
 	unsigned int		*sprite_path;
 	unsigned int		*west_path;
 	unsigned int		*east_path;
+	char						**map;
 }									t_utils;
 
 typedef struct		s_list
@@ -100,5 +101,6 @@ int 		color(char *str, int i, int color);
 int			parse_sprite(char *str, int i, t_list *all);
 int			parse_we(char *str, int i, t_list *all);
 int			parse_ea(char *str, int i, t_list *all);
+int			parse_map(char *str, int i, t_list *all);
 
 #endif

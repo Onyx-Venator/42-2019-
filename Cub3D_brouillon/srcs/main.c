@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/12/07 15:33:09 by anonymous        ###   ########.fr       */
+/*   Updated: 2020/12/08 14:49:28 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_utils(t_list *all)
 	all->utils.sprite_path = 0;
 	all->utils.west_path = 0;
 	all->utils.east_path = 0;
+	all->utils.map = NULL;
 	return ;
 }
 
