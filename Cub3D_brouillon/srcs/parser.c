@@ -6,11 +6,23 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/12/08 14:35:45 by anonymous        ###   ########.fr       */
+/*   Updated: 2021/01/11 10:12:42 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int if_line(char *str, int i)
+{
+  if (str[i] == ' ')
+  {
+    while (str[i] == ' ')
+      i++;
+  }
+  if (str[i] == '1')
+    return (1);
+  return (0);
+}
 
 int check_c(char *str, int i, t_list *all)
 {
@@ -62,7 +74,7 @@ int check_c(char *str, int i, t_list *all)
     if ((i = parse_ea(str, i, all)) < 0)
       parser_error(i);
   }
-  if (str[i] == '1' && i >= 0)
+  if (str[i] == '1' && i >= 0 || if_line(str, i) == 1)
   {
     if ((i = parse_map(str, i, all)) < 0)
       parser_error(i);

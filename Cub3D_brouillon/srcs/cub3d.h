@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:22:23 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/12/08 14:49:09 by anonymous        ###   ########.fr       */
+/*   Updated: 2021/01/25 11:29:51 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ int			parse_sprite(char *str, int i, t_list *all);
 int			parse_we(char *str, int i, t_list *all);
 int			parse_ea(char *str, int i, t_list *all);
 int			parse_map(char *str, int i, t_list *all);
+int			if_line(char *str, int i);
+int			copy_map(char *str, int start, int end, t_list *all);
+int			alloc_line(char *str, int j, int end, t_list *all);
 
 #endif
