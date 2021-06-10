@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/10 14:39:15 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/06/10 15:07:28 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,13 @@ int	ft_verif(int ac, char **av)
 	return (1);
 }
 
-int	init(t_stack *stack, int ac, char **av)
-{
-	init_a(stack, ac, av);
-	init_b(stack, ac, av);
-}
-
 int	main(int ac, char **av)
 {
 	t_stack	stack;
-	t_value	*a;
-	t_value	*b;
+	t_value	tmp;
+	int		i;
 
+	i = 0;
 	if (ac == 1 || ft_verif(ac, av) == 0)
 	{
 		write (2, "Error\n", 6);
@@ -98,11 +93,18 @@ int	main(int ac, char **av)
 	}
 	stack.a = NULL;
 	stack.b = NULL;
-	if (init(stack, ac, av) == 0)
+	while (ac > ++i)
 	{
-		write (2, "Error\n", 6);
-		return (0);
+		tmp = malloc(sizeof(t_value));
+		if (tmp == NULL)
+		{
+			write (2, "Error\n", 6);
+			return (0);
+		}
+		tmp->next = NULL;
+		tmp->value = ft_atoi(av[i]);
+		ft_lstadd_back(&(stack->a), tmp);
 	}
-	//algo
+	//id_demerde
 	return ;
 }
