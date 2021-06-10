@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/10 14:04:21 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/06/10 14:39:15 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,6 @@ int	ft_verif(int ac, char **av)
 
 int	init(t_stack *stack, int ac, char **av)
 {
-	stack = malloc(sizeof(t_stack));
-	if (!stack)
-		return (0);
 	init_a(stack, ac, av);
 	init_b(stack, ac, av);
 }
@@ -99,6 +96,8 @@ int	main(int ac, char **av)
 		write (2, "Error\n", 6);
 		return (0);
 	}
+	stack.a = NULL;
+	stack.b = NULL;
 	if (init(stack, ac, av) == 0)
 	{
 		write (2, "Error\n", 6);

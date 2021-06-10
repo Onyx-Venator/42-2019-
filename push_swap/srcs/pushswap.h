@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:45 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/10 13:22:42 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/06/10 14:42:10 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int		verif_len(char *str);
 int		ft_verif(int ac, char **av);
 int		init(t_stack *stack, int ac, char **av);
 int		ft_atoiminmax(int i, char *str);
+int		verif_doublon(char **av);;
 
 #endif
