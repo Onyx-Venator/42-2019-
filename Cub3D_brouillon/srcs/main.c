@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 16:52:33 by cofoundo          #+#    #+#             */
-/*   Updated: 2020/12/08 14:49:28 by anonymous        ###   ########.fr       */
+/*   Updated: 2021/06/10 11:42:16 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_init_struct(t_list *all)
 
 int		main(int ac, char **av)
 {
-	t_list	all;
+	t_list		all;
 	t_mlx		mlx;
 	t_win		win;
 	t_img		img;

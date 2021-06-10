@@ -6,71 +6,104 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/04 12:37:32 by anonymous        ###   ########.fr       */
+/*   Updated: 2021/06/10 14:04:21 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int verif_len(char *str)
+int	verif_doublon(char **av)
 {
-  int i;
+	int	i;
+	int	j;
+	int	x;
 
-  i = 0;
-  if (str[i] == '-')
-  {
-    while (str[i++])
-      ;
-    if (i > 11)
-      return (0);
-  }
-  else
-  {
-    while (str[i++])
-      ;
-    if (i > 10)
-      return (0);
-  }
-  return (1);
+	i = -1;
+	while (av[++i])
+	{
+		x = -1;
+		j = i + 1;
+		while (av[i][++x])
+		{
+			if ((av[i][x] == av[j][x]) && (x == 0))
+			{
+				while (av[i][x] && av[j][x] && (av[i][x] == av[j][x]))
+					x++;
+				if (!av[i][x] && !av[j][x])
+					return (0);
+			}
+		}
+	}
+	return (1);
 }
 
-int ft_verif(int ac, char **av)
+int	verif_len(char *str)
 {
-  int i;
+	int	i;
 
-  i = 0;
-  while (i < ac)
-  {
-    i++;
-      if (verif_len(av[i]) == 0)
-        return (0);
-      if (ft_isdigit(av[i]) == 0)
-        return (0);
-  }
-  return (1);
+	i = 0;
+	if (str[i] == '-')
+	{
+		while (str[i++])
+		;
+		if (i > 11)
+		return (0);
+	}
+	else
+	{
+		while (str[i++])
+		;
+		if (i > 10)
+		return (0);
+	}
+	if (ft_atoiminmax(i, str) == 0)
+		return (0);
+	return (1);
 }
 
-int init(t_stack stack, int ac, char **av)
+int	ft_verif(int ac, char **av)
 {
-  
+	int	i;
+
+	i = 0;
+	while (i < ac)
+	{
+		i++;
+		if (ft_isdigit(av[i]) == 0)
+		return (0);
+		if (verif_len(av[i]) == 0)
+			return (0);
+	}
+	if (verif_doublon(av) == 0)
+		return (0);
+	return (1);
 }
 
-int main(int ac, char **av)
+int	init(t_stack *stack, int ac, char **av)
 {
-  t_stack stack;
-  t_value *a;
-  t_value *b;
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
+		return (0);
+	init_a(stack, ac, av);
+	init_b(stack, ac, av);
+}
 
-  if (ac == 1 || ft_verif(ac, av) == 0)
-  {
-    write (2, "Error\n", 6);
-    return (0);
-  }
-  if (init(stack, ac, av) == 0)
-  {
-    write (2, "Error\n", 6);
-    return (0);
-  }
-  //algo
-  return ;
+int	main(int ac, char **av)
+{
+	t_stack	stack;
+	t_value	*a;
+	t_value	*b;
+
+	if (ac == 1 || ft_verif(ac, av) == 0)
+	{
+		write (2, "Error\n", 6);
+		return (0);
+	}
+	if (init(stack, ac, av) == 0)
+	{
+		write (2, "Error\n", 6);
+		return (0);
+	}
+	//algo
+	return ;
 }
