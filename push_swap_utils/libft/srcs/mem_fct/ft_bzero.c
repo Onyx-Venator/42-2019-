@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tsantoni <tsantoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/13 17:23:25 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/06/10 14:57:24 by cofoundo         ###   ########.fr       */
+/*   Created: 2019/10/08 19:28:16 by tsantoni          #+#    #+#             */
+/*   Updated: 2021/05/18 12:12:59 by ssingevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pushswap.h"
+#include <libft.h>
 
-void	ft_lstadd_back(t_value **alst, t_value *new)
+void	ft_bzero(void *s, size_t n)
 {
-	t_list	*tmp;
+	size_t	i;
 
-	if (*alst)
+	i = 0;
+	if (n > 0)
 	{
-		tmp = *alst;
-		tmp = ft_lstlast(tmp);
-		tmp->next = new;
+		while (i < n)
+		{
+			*((char *)(s + i)) = '\0';
+			i++;
+		}
 	}
-	else
-		*alst = new;
 }

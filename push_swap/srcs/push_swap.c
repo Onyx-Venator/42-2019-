@@ -6,11 +6,36 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/10 15:07:28 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:02:06 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+void	add_id(t_value *a, int *j)
+{
+	int	u;
+	int	tmp;
+
+	u = -1;
+	while (j[++u])
+	{
+		if (j[u + 1] && (j[u] > j[u + 1]))
+		{
+			tmp = j[u];
+			j[u] = j[u + 1];
+			j[u + 1] = tmp;
+			u = -1;
+		}
+	}
+	while (a->next)
+	{
+		u = -1;
+		while (a->value != j[++u])
+			;
+		a->id = u;
+	}
+}
 
 int	verif_doublon(char **av)
 {
@@ -84,6 +109,7 @@ int	main(int ac, char **av)
 	t_stack	stack;
 	t_value	tmp;
 	int		i;
+	int		*j;
 
 	i = 0;
 	if (ac == 1 || ft_verif(ac, av) == 0)
@@ -93,6 +119,13 @@ int	main(int ac, char **av)
 	}
 	stack.a = NULL;
 	stack.b = NULL;
+	j = malloc(sizeof(int) * (ac + 1));
+	if (j == NULL)
+	{
+		write (2, "Error\n", 6);
+		return (0);
+	}
+	j[ac] = NULL;
 	while (ac > ++i)
 	{
 		tmp = malloc(sizeof(t_value));
@@ -103,8 +136,10 @@ int	main(int ac, char **av)
 		}
 		tmp->next = NULL;
 		tmp->value = ft_atoi(av[i]);
+		j[i -1] = tmp->value;
+		tmp->id = i;
 		ft_lstadd_back(&(stack->a), tmp);
 	}
-	//id_demerde
+	add_id(stack.a, i, j);
 	return ;
 }

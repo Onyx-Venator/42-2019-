@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:45 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/10 14:58:58 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:01:50 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		verif_len(char *str);
 int		ft_verif(int ac, char **av);
 int		ft_atoiminmax(int i, char *str);
 int		verif_doublon(char **av);
-void	ft_lstadd_back(t_value **alst, t_value *new)
-
+void	ft_lstadd_back(t_value **alst, t_value *new);
+void	add_id(t_value *a, int *j);
+t_value	*ft_lstlast(t_value *lst);
 #endif
