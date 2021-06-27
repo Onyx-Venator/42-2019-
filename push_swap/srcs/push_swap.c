@@ -6,11 +6,52 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/13 15:02:06 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/06/27 23:11:32 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+void ft_exec_op(int op, t_stack *stack)
+{
+	if (op == RA)
+		ft_ra(stack);
+	else if (op == RB)
+		ft_rb(stack);
+	else if (op == RR)
+		ft_rr(stack);
+	else if (op == RRA)
+		ft_rra(stack);
+	else if (op == RRB)
+		ft_rrb(stack);
+	else if (op == RRR)
+		ft_rrr(stack);
+	else if (op == PA)
+		ft_pa(stack);
+	else if (op == PB)
+		ft_pb(stack);
+	else if (op == SA)
+		ft_sa(stack);
+	else if (op == SB)
+		ft_sb(stack);
+	else if (op == SS)
+		ft_ss(stack);
+}
+
+int		ft_pos(t_value *a, int target)
+{
+	int		i;
+	t_stack	*tmp;
+
+	tmp = a;
+	i = 1;
+	while (tmp->id != target)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return (i);
+}
 
 void	add_id(t_value *a, int *j)
 {
