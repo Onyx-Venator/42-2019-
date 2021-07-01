@@ -6,13 +6,88 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/27 23:11:32 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/07/02 01:29:59 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void ft_exec_op(int op, t_stack *stack)
+void	longer_chain(t_stack *stack)
+{
+	t_value *tmp;
+	t_value *tmp_utils;
+	int count[2];
+	int id[3];
+
+	tmp = stack->a;
+	count[0] = 0;
+	while (tmp)
+	{
+		tmp_utils = stack->a;
+		count[1] = 0;
+		id[1] = tmp->id;
+		while ((tmp_utils->id != id[1] || count[1] == 0) && tmp_utils)
+		{
+			id[2] = tmp->id;
+			while(tmp->next)
+			{
+				if (tmp->id > id[2])
+				{
+					count[1]++;
+					id[2] = tmp->id;
+				}
+				tmp = tmp->next;
+			}
+			if (tmp_utils->id > id[2] && count[1]++)
+				id[2] = tmp->id;
+			tmp_utils = tmp_utils->next;
+		}
+		if (count[0] < count[1])
+			id[0] = id[1];
+		tmp = tmp_utils;
+	}
+	stack->start_chain = id[0];
+	free(tmp);
+	free(tmp_utils);
+}
+
+void	longer_chain(t_stack *stack)
+{
+	t_value *tmp;
+	t_value *tmp_utils;
+	t_value *best;
+	int i[2];
+	int cur_id;
+
+	tmp = stack->a;
+	i[1] = 0;
+	while (tmp)
+	{
+		tmp_utils = tmp->next;
+		i[0] = 0;
+		cur_id = tmp->id;
+		while (tmp_utils != tmp)
+		{
+			if (tmp_utils = NULL)
+				tmp_utils = stack->a;
+			if (cur_id < tmp_utils->id)
+			{
+				i[0]++;
+				cur_id = tmp_utils->id;
+			}
+			tmp_utils = tmp_utils->next;
+		}
+		if (i > i[1])
+		{
+			best = tmp;
+			i[1] = i[0];
+		}
+		tmp = tmp->next;
+	}
+	stack->start_chain = best->id;
+}
+
+void	ft_exec_op(int op, t_stack *stack)
 {
 	if (op == RA)
 		ft_ra(stack);
@@ -179,8 +254,10 @@ int	main(int ac, char **av)
 		tmp->value = ft_atoi(av[i]);
 		j[i -1] = tmp->value;
 		tmp->id = i;
+		tmp->flag = 0;
 		ft_lstadd_back(&(stack->a), tmp);
 	}
 	add_id(stack.a, i, j);
+	longer_chain(&stack)
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:45 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/27 23:13:30 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/07/01 23:43:09 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ typedef struct	s_value
 	t_value		*next;
 	int	 		value;
 	int	 		id;
+	int			flag;
 }				t_value;
 
 typedef struct	s_stack
 {
 	t_value		*a;
 	t_value		*b;
+	int			start_chain;
 }				t_stack;
 
 void	ft_sa(t_stack *t);
@@ -63,4 +65,5 @@ void	add_id(t_value *a, int *j);
 t_value	*ft_lstlast(t_value *lst);
 int		ft_pos(t_value *a, int target);
 void	ft_exec_op(int op, t_stack *stack);
+void	longer_chain(t_stack *stack);
 #endif
