@@ -6,7 +6,7 @@
 /*   By: tsantoni <tsantoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 16:42:51 by tsantoni          #+#    #+#             */
-/*   Updated: 2021/05/03 17:55:03 by tsantoni         ###   ########.fr       */
+/*   Updated: 2021/07/06 03:01:46 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,21 @@ static void	find_best_case(t_stack *a, t_stack *b, t_case *c)
 		tmp = tmp->next;
 	}
 	fill_case_data(a, b, best, c);
+
 }
 
 void		merge_stacks(t_stack **a, t_stack **b)
 {
-	t_case	*c;
+	t_case	c;
 	t_stack *tmp;
 
 	tmp = (*b)->next;
-	if (!(c = malloc(sizeof(t_case))))
-		return ;
+	// if (!(c = malloc(sizeof(t_case))))
+	// 	return ;
 	while ((*b)->next != *b)
 	{
-		find_best_case(*a, *b, c);
-		apply_case(a, b, c);
+		find_best_case(*a, *b, &c);
+		apply_case(a, b, &c);
 	}
 	free(c);
 }

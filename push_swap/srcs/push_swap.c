@@ -6,56 +6,31 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/07/02 01:29:59 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/07/06 03:01:47 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void	longer_chain(t_stack *stack)
+void	id_max(t_stack *stack)
 {
-	t_value *tmp;
-	t_value *tmp_utils;
-	int count[2];
-	int id[3];
+	t_value	tmp;
 
 	tmp = stack->a;
-	count[0] = 0;
+	stack->id_max = tmp->id;
 	while (tmp)
 	{
-		tmp_utils = stack->a;
-		count[1] = 0;
-		id[1] = tmp->id;
-		while ((tmp_utils->id != id[1] || count[1] == 0) && tmp_utils)
-		{
-			id[2] = tmp->id;
-			while(tmp->next)
-			{
-				if (tmp->id > id[2])
-				{
-					count[1]++;
-					id[2] = tmp->id;
-				}
-				tmp = tmp->next;
-			}
-			if (tmp_utils->id > id[2] && count[1]++)
-				id[2] = tmp->id;
-			tmp_utils = tmp_utils->next;
-		}
-		if (count[0] < count[1])
-			id[0] = id[1];
-		tmp = tmp_utils;
+		if (tmp->id > stack->id_max)
+			stack->id_max = tmp->id;
+		tmp = tmp->next;
 	}
-	stack->start_chain = id[0];
-	free(tmp);
-	free(tmp_utils);
 }
 
 void	longer_chain(t_stack *stack)
 {
-	t_value *tmp;
-	t_value *tmp_utils;
-	t_value *best;
+	t_value	tmp;
+	t_value	tmp_utils;
+	t_value	best;
 	int i[2];
 	int cur_id;
 
@@ -259,5 +234,8 @@ int	main(int ac, char **av)
 	}
 	add_id(stack.a, i, j);
 	longer_chain(&stack)
+	/*blabla mettre les flags*/
+	id_max(&stack);
+
 	return ;
 }
