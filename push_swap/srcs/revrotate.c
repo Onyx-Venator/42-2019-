@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 12:05:08 by anonymou          #+#    #+#             */
-/*   Updated: 2021/07/06 02:10:35 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/08/25 12:18:13 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	ft_rra(t_stack *t)
 {
-	t_lst	*start;
-	t_lst	*tmp;
+	t_value	*start;
+	t_value	*tmp;
 
+	write(1, "rra", 3);
 	if (t->a && t->a->next)
 	{
 		start = t->a;
@@ -34,9 +35,10 @@ void	ft_rra(t_stack *t)
 
 void	ft_rrb(t_stack *t)
 {
-	t_lst	*start;
-	t_lst	*tmp;
+	t_value	*start;
+	t_value	*tmp;
 
+	write(1, "rrb", 3);
 	if (t->b && t->b->next)
 	{
 		start = t->b;
@@ -54,6 +56,7 @@ void	ft_rrb(t_stack *t)
 
 void	ft_rrr(t_stack *t)
 {
+	write(1, "rrr", 3);
 	ft_rra(t);
 	ft_rrb(t);
 }

@@ -6,11 +6,227 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/07/06 03:01:47 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/08/25 13:05:46 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+int		get_stack_max(t_value *a)
+{
+	t_value	*tmp;
+	int		max;
+
+	tmp = a;
+	max = tmp->value;
+	while (tmp)
+	{
+		if (tmp->value > max)
+			max = tmp->value
+		tmp = tmp->next;
+	}
+	free(tmp);
+	return (max);
+}
+
+int		get_stack_min(t_value *a)
+{
+	t_value	*tmp;
+	int		min;
+
+	tmp = a;
+	min = tmp->value;
+	while (tmp)
+	{
+		if (tmp->value < min)
+			min = tmp->value
+		tmp = tmp->next;
+	}
+	free(tmp);
+	return (min);
+}
+
+int		get_id(t_value *b, int val)
+{
+	t_value	*tmp;
+	int		id;
+
+	id = 0;
+	tmp = b;
+	while (tmp)
+	{
+		if (tmp->value == val)
+			return (id);
+		id++;
+		tmp = tmp->next;
+	}
+	return (id);
+}
+
+int		get_next_id(t_value *a, int val)
+{
+	t_value	*tmp;
+	t_value	*last;
+	int		min;
+	int		max;
+	int		index;
+
+	index = 0;
+	min = get_stack_min(a);
+	max = get_stack_max(a);
+	tmp = a;
+	if (val < min || val > max)
+		index = get_id(a, min);
+	else
+	{
+		while (last->next)
+			last = last->next;
+		while (val > tmp->value)
+			tmp = tmp->next;
+		index = get_id(a, tmp->value);
+		last->next = NULL;
+	}
+	return (index);
+}
+
+int		end_stack(t_value *a)
+{
+	t_value tmp;
+
+	tmp = a;
+	while (tmp)
+		tmp =tmp->next;
+	return (tmp->id);
+}
+
+void	ft_exec_op(int op, t_stack *stack, int nb_ope)
+{
+	while (nb_ope != 0)
+	{
+		if (op == RA)
+			ft_ra(stack);
+		else if (op == RB)
+			ft_rb(stack);
+		else if (op == RR)
+			ft_rr(stack);
+		else if (op == RRA)
+			ft_rra(stack);
+		else if (op == RRB)
+			ft_rrb(stack);
+		else if (op == RRR)
+			ft_rrr(stack);
+		else if (op == PA)
+			ft_pa(stack);
+		else if (op == PB)
+			ft_pb(stack);
+		else if (op == SA)
+			ft_sa(stack);
+		else if (op == SB)
+			ft_sb(stack);
+		else if (op == SS)
+			ft_ss(stack);
+		nb_ope--;
+	}
+}
+
+void	exec_ope_n(t_stack *stack)
+{
+	if (stack->next_id < (stack->size_a / 2 + 1) && stack->id <
+	(stack->size_b / 2 + 1))
+	{
+		ft_exec_op(RR, stack, min(stack->next_id, stack->id));
+		ft_exec_op(RA, stack, max(0, stack->id - min(stack->next_id, stack->id)))
+		ft_exec_op(RB, stack, max(0, stack->id - min(stack->next_id, stack->id)))
+	}
+	else if (stack->next_id >= (stack->size_a / 2 + 1) && stack->id >=
+	(stack->size_b / 2 + 1))
+	{
+		ft_exec_op(RRR, stack, min(stack->size_a - stack->next_id, stack->size_b - stack->id));
+		ft_exec_op(RRA, stack, max(0, stack->size_a - stack->next_id
+			- min(stack->size_a - stack->next_id, stack->size_b - stack->id)));
+		ft_exec_op(RRB, stack, max(0, stack->size_b - stack->id -
+			min(stack->size_a - stack->next_id, stack->size_b - stack->id)));
+	}
+	else if (stack->next_id > (stack->size_a / 2 + 1) && stack->id >=
+	(stack->size_b / 2 + 1))
+	{
+		ft_exec_op(RA, stack, stack->next_id);
+		ft_exec_op(RRB, stack, stack->size_b - stack->id);
+	}
+	else if (stack->next_id >= (stack->size_a / 2 + 1) && stack->id <
+	(stack->size_b / 2 + 1))
+	{
+		ft_exec_op(RRA, stack, stack->size_a - stack->next_id);
+		ft_exec_op(RB, stack, stack->id);
+	}
+	ft_exec_op(PA, stack, 1);
+}
+
+int		*best_op(t_stack *stack)
+{
+	t_value	*tmp;
+	int		op;
+
+	tmp = stack->b->next;
+	stack->next_id = get_next_id(stack->a, tmp->value);
+	stack->id = get_id(stack->b, tmp->value);
+	stack->size_a = ft_lstsize(stack->a);
+	stack->size_b = ft_lstsize(stack->b);
+}
+
+void	search_op(t_stack *stack)
+{
+	int	op;
+
+	while (stack->b->next != stack->b)
+	{
+		best_op(stack);
+		apply_op(stack);
+	}
+	free(op);
+}
+
+void	swap_stack(t_stack *stack)
+{
+	int	i;
+
+	i = stack->a->id;
+	if (stack->a->id == 1)
+		ft_exec_op(RA, stack);
+	else
+		ft_exec_op(PB, stack);
+	while (stack->a->id != i)
+	{
+		if (stack->a->id == 1)
+			ft_exec_op(RA, stack, 1);
+		else
+			ft_exec_op(PB, stack, 1);
+	}
+}
+
+void	set_flags(t_stack *stack)
+{
+	t_value	tmp;
+	int		i;
+	int		*x;
+
+	tmp = stack->a;
+	if (tmp->id == stack->start_chain)
+		tmp->flag = 1;
+	x = &tmp;
+	while (tmp)
+	{
+		i = tmp->id;
+		if (tmp->id > i)
+		{
+			i = tmp->id;
+			tmp->flag = 1;
+		}
+		tmp = tmp->next;
+	}
+	&tmp = x;
+	stack->a = tmp;
+}
 
 void	id_max(t_stack *stack)
 {
@@ -60,32 +276,6 @@ void	longer_chain(t_stack *stack)
 		tmp = tmp->next;
 	}
 	stack->start_chain = best->id;
-}
-
-void	ft_exec_op(int op, t_stack *stack)
-{
-	if (op == RA)
-		ft_ra(stack);
-	else if (op == RB)
-		ft_rb(stack);
-	else if (op == RR)
-		ft_rr(stack);
-	else if (op == RRA)
-		ft_rra(stack);
-	else if (op == RRB)
-		ft_rrb(stack);
-	else if (op == RRR)
-		ft_rrr(stack);
-	else if (op == PA)
-		ft_pa(stack);
-	else if (op == PB)
-		ft_pb(stack);
-	else if (op == SA)
-		ft_sa(stack);
-	else if (op == SB)
-		ft_sb(stack);
-	else if (op == SS)
-		ft_ss(stack);
 }
 
 int		ft_pos(t_value *a, int target)
@@ -233,9 +423,9 @@ int	main(int ac, char **av)
 		ft_lstadd_back(&(stack->a), tmp);
 	}
 	add_id(stack.a, i, j);
-	longer_chain(&stack)
-	/*blabla mettre les flags*/
+	longer_chain(&stack);
+	set_flags(&stack);
 	id_max(&stack);
-
-	return ;
+	swap_stack(&stack);
+	return;
 }

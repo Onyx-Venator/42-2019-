@@ -6,11 +6,27 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:23:25 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/06/13 13:39:40 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/08/23 13:28:05 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+int	ft_lstsize(t_value *lst)
+{
+	int		i;
+	t_value	*tmp;
+
+	i = 0;
+	tmp = lst;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	free(tmp);
+	return (i);
+}
 
 t_value	*ft_lstlast(t_value *lst)
 {
