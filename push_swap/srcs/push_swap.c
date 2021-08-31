@@ -6,97 +6,269 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/08/25 13:05:46 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/08/31 14:08:38 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int		get_stack_max(t_value *a)
+void	case_two(t_stack *stack)
 {
-	t_value	*tmp;
-	int		max;
-
-	tmp = a;
-	max = tmp->value;
-	while (tmp)
-	{
-		if (tmp->value > max)
-			max = tmp->value
-		tmp = tmp->next;
-	}
-	free(tmp);
-	return (max);
+	if (stack->a->id == 2)
+		write(1, "sa\n", 3);
 }
 
-int		get_stack_min(t_value *a)
+void	case_three(t_stack *stack)
 {
-	t_value	*tmp;
-	int		min;
-
-	tmp = a;
-	min = tmp->value;
-	while (tmp)
-	{
-		if (tmp->value < min)
-			min = tmp->value
-		tmp = tmp->next;
-	}
-	free(tmp);
-	return (min);
+	if (stack->a->id == 1 && stack->a->next->id == 3)
+		write(1, "sa\nra\n", 6);
+	else if (stack->a->->id == 2 && stack->a->next->id == 1)
+		write(1, "sa\n", 3);
+	else if (stack->a->->id == 2 && stack->a->next->id == 3)
+		write(1, "rra\n", 4);
+	else if (stack->a->->id == 3 && stack->a->next->id == 1)
+		write(1, "ra\n", 3);
+	else if (stack->a->->id == 3 && stack->a->next->id == 2)
+		write(1, "sa\nrra\n", 7);
 }
 
-int		get_id(t_value *b, int val)
+void	case_four(t_stack *s)
 {
-	t_value	*tmp;
-	int		id;
+	t_value	*t_one;
+	t_value	*t_two;
 
-	id = 0;
-	tmp = b;
-	while (tmp)
-	{
-		if (tmp->value == val)
-			return (id);
-		id++;
-		tmp = tmp->next;
-	}
-	return (id);
+	t_one = stack->a->next;
+	t_two = t_one->next;
+	if (s->a->id == 1 && t_one->id == 2  && t_two->id == 4)
+		write(1, "pb\nsa ra pa\n", 12);
+	else if (s->a->id == 1 && t_one->id == 3  && t_two->id == 2)
+		write(1, "ra\nsa\nrra\n", 10);
+	else if (s->a->id == 1 && t_one->id == 3  && t_two->id == 4)
+		write(1, "rra\nsa\n", 7);
+	else if (s->a->id == 1 && t_one->id == 4  && t_two->id == 2)
+		write(1, "sa\nra\n", 6);
+	else if (s->a->id == 1 && t_one->id == 4  && t_two->id == 3)
+		write(1, "pa\nsa\nrra\npa\n", 13);
+	else if (s->a->id == 2 && t_one->id == 1  && t_two->id == 3)
+		write(1, "sa\n", 3);
+	else if (s->a->id == 2 && t_one->id == 1  && t_two->id == 4)
+		write(1, "sa\npb\nsa\nra\npa\n", 15);
+	else if (s->a->id == 2 && t_one->id == 3  && t_two->id == 1)
+		write(1, "ra\nsa\nrra\nsa\n", 13);
+	else if (s->a->id == 2 && t_one->id == 3  && t_two->id == 4)
+		write(1, "rra\n", 4);
+	else if (s->a->id == 2 && t_one->id == 4  && t_two->id == 1)
+		write(1, "sa\nra\nsa\n", 9);
+	else if (s->a->id == 2 && t_one->id == 4  && t_two->id == 3)
+		write(1, "sa\nrra\nsa\nra\n", 13);
+	else if (s->a->id == 3 && t_one->id == 1  && t_two->id == 2)
+		write(1, "sa\nra\nsa\nrra\n", 13);
+	else if (s->a->id == 3 && t_one->id == 1  && t_two->id == 4)
+		write(1, "sa\nrra\nsa\n", 10);
+	else if (s->a->id == 3 && t_one->id == 2  && t_two->id == 1)
+		write(1, "sa\nra\nsa\nrra\nsa\n", 16);
+	else if (s->a->id == 3 && t_one->id == 2  && t_two->id == 4)
+		write(1, "sa\nrra\n", 7);
+	else if (s->a->id == 3 && t_one->id == 4  && t_two->id == 1)
+		write(1, "ra\nra\n", 6);
+	else if (s->a->id == 3 && t_one->id == 4  && t_two->id == 2)
+		write(1, "ra\nra\nsa\n", 9);
+	else if (s->a->id == 4 && t_one->id == 1  && t_two->id == 2)
+		write(1, "ra\n", 3);
+	else if (s->a->id == 4 && t_one->id == 1  && t_two->id == 3)
+		write(1, "ra\nra\nsa\nrra\n", 16);
+	else if (s->a->id == 4 && t_one->id == 2  && t_two->id == 1)
+		write(1, "ra\nsa\n", 6);
+	else if (s->a->id == 4 && t_one->id == 2  && t_two->id == 3)
+		write(1, "rra\nsa\nra\n", 10);
+	else if (s->a->id == 4 && t_one->id == 3  && t_two->id == 1)
+		write(1, "sa\nra\nra\n", 9);
+	else if (s->a->id == 4 && t_one->id == 3  && t_two->id == 2)
+		write(1, "sa\nra\nra\nsa\n", 12);
 }
 
-int		get_next_id(t_value *a, int val)
+void	case_five(t_stack *s)
 {
-	t_value	*tmp;
-	t_value	*last;
-	int		min;
-	int		max;
-	int		index;
+	t_value	*t_one;
+	t_value	*t_two;
+	t_value	*t_t;
 
-	index = 0;
-	min = get_stack_min(a);
-	max = get_stack_max(a);
-	tmp = a;
-	if (val < min || val > max)
-		index = get_id(a, min);
-	else
-	{
-		while (last->next)
-			last = last->next;
-		while (val > tmp->value)
-			tmp = tmp->next;
-		index = get_id(a, tmp->value);
-		last->next = NULL;
-	}
-	return (index);
-}
-
-int		end_stack(t_value *a)
-{
-	t_value tmp;
-
-	tmp = a;
-	while (tmp)
-		tmp =tmp->next;
-	return (tmp->id);
+	t_one = stack->a->next;
+	t_two = t_one->next;
+	t_t = t_two->next;
+	if (s->a->id == 1 && t_one->id = 2 && t_two->id == 3 && t_t->id == 5)
+		write(1, "rra\nrra\nsa\nra\nra\n", 17);
+	else if (s->a->id == 1 && t_one->id = 2 && t_two->id == 4 && t_t->id == 3)
+		write(1, "ra\nra\nsa\nrra\nrra\n", 17);
+	else if (s->a->id == 1 && t_one->id = 2 && t_two->id == 4 && t_t->id == 5)
+		write(1, "pb\nrra\nsa\npa\n", 14);
+	else if (s->a->id == 1 && t_one->id = 2 && t_two->id == 5 && t_t->id == 3)
+		write(1, "pb\nsa\nra\npa\n", 12);
+	else if (s->a->id == 1 && t_one->id = 2 && t_two->id == 5 && t_t->id == 4)
+		write(1, "pb\npb\nsa\nrra\npa\npa\n", 19);
+	else if (s->a->id == 1 && t_one->id = 3 && t_two->id == 2 && t_t->id == 4)
+		write(1, "ra\nsa\nrra\n", 10);
+	else if (s->a->id == 1 && t_one->id = 3 && t_two->id == 2 && t_t->id == 5)
+		write(1, "ra\nsa\nra\nra\nsa\nra\nra\n", 21);
+	else if (s->a->id == 1 && t_one->id = 3 && t_two->id == 4 && t_t->id == 2)
+		write(1, "rra\nrra\nsa\nra\nsa\n", 17);
+	else if (s->a->id == 1 && t_one->id = 3 && t_two->id == 4 && t_t->id == 5)
+		write(1, "rra\nsa\n", 7);
+	else if (s->a->id == 1 && t_one->id = 3 && t_two->id == 5 && t_t->id == 2)
+		write(1, "pb\nsa\nra\nsa\npa\n", 15);
+	else if (s->a->id == 1 && t_one->id = 3 && t_two->id == 5 && t_t->id == 4)
+		write(1, "ra\nra\nsa\nra\nra\nsa\n", 18);
+	else if (s->a->id == 1 && t_one->id = 4 && t_two->id == 2 && t_t->id == 3)
+		write(1, "sa\nrra\nsa\nra\nra\n", 16);
+	else if (s->a->id == 1 && t_one->id = 4 && t_two->id == 2 && t_t->id == 5)
+		write(1, "pb\nsa\nrra\nsa\npa\n", 16);
+	else if (s->a->id == 1 && t_one->id = 4 && t_two->id == 3 && t_t->id == 2)
+		write(1, "sa\nrra\nsa\nrra\nrra\nsa\nrra\n", 25);
+	else if (s->a->id == 1 && t_one->id = 4 && t_two->id == 3 && t_t->id == 5)
+		write(1, "pb\nsa\nrra\npa\n", 13);
+	else if (s->a->id == 1 && t_one->id = 4 && t_two->id == 5 && t_t->id == 2)
+		write(1, "sa\nra\nsa\nra\n", 12);
+	else if (s->a->id == 1 && t_one->id = 4 && t_two->id == 5 && t_t->id == 3)
+		write(1, "pb\nra\nra\nsa\npa\n", 15);
+	else if (s->a->id == 1 && t_one->id = 5 && t_two->id == 2 && t_t->id == 3)
+		write(1, "sa\nra\n", 6);
+	else if (s->a->id == 1 && t_one->id = 5 && t_two->id == 2 && t_t->id == 4)
+		write(1, "sa\nrra\nrra\nsa\nrra\nrra\n", 22);
+	else if (s->a->id == 1 && t_one->id = 5 && t_two->id == 3 && t_t->id == 2)
+		write(1, "pb\nra\nsa\npa\n", 12);
+	else if (s->a->id == 1 && t_one->id = 5 && t_two->id == 3 && t_t->id == 4)
+		write(1, "sa\nrra\nsa\nra\nsa\n", 16);
+	else if (s->a->id == 1 && t_one->id = 5 && t_two->id == 4 && t_t->id == 2)
+		write(1, "pb\nsa\nra\nra\npa\n", 15);
+	else if (s->a->id == 1 && t_one->id = 5 && t_two->id == 4 && t_t->id == 3)
+		write(1, "pb\nsa\nra\nra\nsa\npa\n", 18);
+	else if (s->a->id == 2 && t_one->id = 1 && t_two->id == 3 && t_t->id == 4)
+		write(1, "sa\n", 3);
+	else if (s->a->id == 2 && t_one->id = 1 && t_two->id == 3 && t_t->id == 5)
+		write(1, "sa\nrra\nrra\nsa\nra\nra\n", 20);
+	else if (s->a->id == 2 && t_one->id = 1 && t_two->id == 4 && t_t->id == 3)
+		write(1, "ra\npb\nsa\nrra\npa\n", 16);
+	else if (s->a->id == 2 && t_one->id = 1 && t_two->id == 4 && t_t->id == 5)
+		write(1, "sa\npb\nrra\nsa\npa\n", 16);
+	else if (s->a->id == 2 && t_one->id = 1 && t_two->id == 5 && t_t->id == 3)
+		write(1, "sa\npb\nsa\nra\npa\n", 15);
+	else if (s->a->id == 2 && t_one->id = 1 && t_two->id == 5 && t_t->id == 4)
+		write(1, "pb\npb\nsa\nrrr\npa\npa\n", 19);
+	else if (s->a->id == 2 && t_one->id = 3 && t_two->id == 1 && t_t->id == 4)
+		write(1, "ra\nsa\nrra\nsa\n", 13);
+	else if (s->a->id == 2 && t_one->id = 3 && t_two->id == 1 && t_t->id == 5)
+		write(1, "ra\nra\npb\nsa\nra\nra\npa\n", 21);
+	else if (s->a->id == 2 && t_one->id = 3 && t_two->id == 4 && t_t->id == 1)
+		write(1, "rra\nrra\nsa\nra\n", 14);
+	else if (s->a->id == 2 && t_one->id = 3 && t_two->id == 4 && t_t->id == 5)
+		write(1, "rra\n", 4);
+	else if (s->a->id == 2 && t_one->id = 3 && t_two->id == 5 && t_t->id == 1)
+		write(1, "pb\nrra\nsa\npa\nrra\n", 17);
+	else if (s->a->id == 2 && t_one->id = 3 && t_two->id == 5 && t_t->id == 4)
+		write(1, "ra\nra\nsa\nra\nra\n", 15);
+	else if (s->a->id == 2 && t_one->id = 4 && t_two->id == 1 && t_t->id == 3)
+		write(1, "sa\nrra\nsa\nra\nra\nsa\n", 19);
+	else if (s->a->id == 2 && t_one->id = 4 && t_two->id == 1 && t_t->id == 5)
+		write(1, "ra\nra\npb\nra\nsa\npa\n", 18);
+	else if (s->a->id == 2 && t_one->id = 4 && t_two->id == 3 && t_t->id == 1)
+		write(1, "ra\nsa\nra\nra\nsa\nra\n", 18);
+	else if (s->a->id == 2 && t_one->id = 4 && t_two->id == 3 && t_t->id == 5)
+		write(1, "ra\nsa\nrra\nrra\n", 14);
+	else if (s->a->id == 2 && t_one->id = 4 && t_two->id == 5 && t_t->id == 1)
+		write(1, "rra\nsa\nrra\n", 11);
+	else if (s->a->id == 2 && t_one->id = 4 && t_two->id == 5 && t_t->id == 3)
+		write(1, "rra\npb\nrra\nsa\npa\n", 17);
+	else if (s->a->id == 2 && t_one->id = 5 && t_two->id == 1 && t_t->id == 3)
+		write(1, "sa\nra\nsa\n", 9);
+	else if (s->a->id == 2 && t_one->id = 5 && t_two->id == 1 && t_t->id == 4)
+		write(1, "pb\nra\nra\nsa\npa\nrra\n", 19);
+	else if (s->a->id == 2 && t_one->id = 5 && t_two->id == 3 && t_t->id == 1)
+		write(1, "pb\nra\nsa\npa\nsa\n", 15);
+	else if (s->a->id == 2 && t_one->id = 5 && t_two->id == 3 && t_t->id == 4)
+		write(1, "sa\nrra\nsa\nra\n", 13);
+	else if (s->a->id == 2 && t_one->id = 5 && t_two->id == 4 && t_t->id == 1)
+		write(1, "pb\nsa\nrra\npa\nrra\n", 17);
+	else if (s->a->id == 2 && t_one->id = 5 && t_two->id == 4 && t_t->id == 3)
+		write(1, "ra\npb\nsa\nra\nra\npa\nra\n", 21);
+	else if (s->a->id == 2 && t_one->id = 4 && t_two->id == 3 && t_t->id == 1)
+		write(1, "ra\npb\nsa\nra\nra\npa\nra\n", 21);
+	else if (s->a->id == 3 && t_one->id = 1 && t_two->id == 2 && t_t->id == 4)
+		write(1, "sa\nra\nsa\nrra\n", 13);
+	else if (s->a->id == 3 && t_one->id = 1 && t_two->id == 2 && t_t->id == 5)
+		write(1, "ra\npb\npb\nsa\nrra\npa\npa\n", 22);
+	else if (s->a->id == 3 && t_one->id = 1 && t_two->id == 4 && t_t->id == 2)
+		write(1, "sa\nrra\nrra\nsa\nra\nsa\n", 20);
+	else if (s->a->id == 3 && t_one->id = 1 && t_two->id == 4 && t_t->id == 5)
+		write(1, "sa\nrra\nsa\n", 10);
+		{ 5, { 3, 1, 4, 5, 2 }, { "sa", "rra", "sa" } },
+		{ 5, { 3, 1, 5, 2, 4 }, { "sa", "pb", "sa", "ra", "sa", "pa" } },
+		{ 5, { 3, 1, 5, 4, 2 }, { "ra", "pb", "sa", "ra", "ra", "pa" } },
+		{ 5, { 3, 2, 1, 4, 5 }, { "sa", "ra", "sa", "rra", "sa" } },
+		{ 5, { 3, 2, 1, 5, 4 }, { "ra", "pb", "pb", "sa", "rr"r "pa", "pa" } },
+		{ 5, { 3, 2, 4, 1, 5 }, { "sa", "rra", "rra", "sa", "ra" } },
+		{ 5, { 3, 2, 4, 5, 1 }, { "sa", "rra" } },
+		{ 5, { 3, 2, 5, 1, 4 }, { "sa", "pb", "rra", "sa", "pa", "rra" } },
+		{ 5, { 3, 2, 5, 4, 1 }, { "sa", "ra", "ra", "sa", "ra", "ra" } },
+		{ 5, { 3, 4, 1, 2, 5 }, { "ra", "ra", "pb", "sa", "ra", "pa" } },
+		{ 5, { 3, 4, 1, 5, 2 }, { "ra", "ra", "sa", "ra" } },
+		{ 5, { 3, 4, 2, 1, 5 }, { "ra", "ra", "sa", "pb", "sa", "ra", "pa" } },
+		{ 5, { 3, 4, 2, 5, 1 }, { "ra", "sa", "rra", "sa", "rra" } },
+		{ 5, { 3, 4, 5, 1, 2 }, { "rra", "rra" } },
+		{ 5, { 3, 4, 5, 2, 1 }, { "rra", "rra", "sa" } },
+		{ 5, { 3, 5, 1, 2, 4 }, { "rra", "sa", "rra", "rra" } },
+		{ 5, { 3, 5, 1, 4, 2 }, { "ra", "pb", "sa", "ra", "pa", "ra" } },
+		{ 5, { 3, 5, 2, 1, 4 }, { "rra", "sa", "rra", "rra", "sa" } },
+		{ 5, { 3, 5, 2, 4, 1 }, { "sa", "rra", "pb", "ra", "sa", "pa" } },
+		{ 5, { 3, 5, 4, 1, 2 }, { "ra", "sa", "ra", "ra" } },
+		{ 5, { 3, 5, 4, 2, 1 }, { "ra", "sa", "ra", "ra", "sa" } },
+		{ 5, { 4, 1, 2, 3, 5 }, { "rra", "sa", "ra", "ra" } },
+		{ 5, { 4, 1, 2, 5, 3 }, { "ra", "pb", "sa", "ra", "pa" } },
+		{ 5, { 4, 1, 3, 2, 5 }, { "rra", "sa", "rra", "rra", "sa", "rra" } },
+		{ 5, { 4, 1, 3, 5, 2 }, { "sa", "pb", "sa", "rra", "pa" } },
+		{ 5, { 4, 1, 5, 2, 3 }, { "ra", "sa", "ra" } },
+		{ 5, { 4, 1, 5, 3, 2 }, { "ra", "pb", "ra", "sa", "pa" } },
+		{ 5, { 4, 2, 1, 3, 5 }, { "rra", "sa", "ra", "ra", "sa" } },
+		{ 5, { 4, 2, 1, 5, 3 }, { "ra", "sa", "pb", "sa", "ra", "pa" } },
+		{ 5, { 4, 2, 3, 1, 5 }, { "sa", "ra", "sa", "ra", "ra", "sa", "ra" } },
+		{ 5, { 4, 2, 3, 5, 1 }, { "sa", "ra", "sa", "rra", "rra" } },
+		{ 5, { 4, 2, 5, 1, 3 }, { "sa", "rra", "sa", "rra" } },
+		{ 5, { 4, 2, 5, 3, 1 }, { "sa", "rra", "pb", "rra", "sa", "pa" } },
+		{ 5, { 4, 3, 1, 2, 5 }, { "sa", "ra", "ra", "pb", "sa", "ra", "pa" } },
+		{ 5, { 4, 3, 1, 5, 2 }, { "sa", "ra", "ra", "sa", "ra" } },
+		{ 5, { 4, 3, 2, 1, 5 }, { "sa", "ra", "ra", "sa", "pb", "sa", "ra", "pa" } },
+		{ 5, { 4, 3, 2, 5, 1 }, { "sa", "ra", "sa", "rra", "sa", "rra" } },
+		{ 5, { 4, 3, 5, 1, 2 }, { "sa", "rra", "rra" } },
+		{ 5, { 4, 3, 5, 2, 1 }, { "sa", "rra", "rra", "sa" } },
+		{ 5, { 4, 5, 1, 2, 3 }, { "ra", "ra" } },
+		{ 5, { 4, 5, 1, 3, 2 }, { "rra", "rra", "sa", "rra" } },
+		{ 5, { 4, 5, 2, 1, 3 }, { "ra", "ra", "sa" } },
+		{ 5, { 4, 5, 2, 3, 1 }, { "rra", "sa", "ra", "sa", "ra" } },
+		{ 5, { 4, 5, 3, 1, 2 }, { "ra", "sa", "rra", "sa", "rra", "rra" } },
+		{ 5, { 4, 5, 3, 2, 1 }, { "rra", "pb", "ra", "ra", "sa", "pa" } },
+		{ 5, { 5, 1, 2, 3, 4 }, { "ra" } },
+		{ 5, { 5, 1, 2, 4, 3 }, { "rra", "rra", "sa", "rra", "rra" } },
+		{ 5, { 5, 1, 3, 2, 4 }, { "ra", "ra", "sa", "rra" } },
+		{ 5, { 5, 1, 3, 4, 2 }, { "rra", "sa", "ra", "sa" } },
+		{ 5, { 5, 1, 4, 2, 3 }, { "pb", "sa", "ra", "pa", "ra" } },
+		{ 5, { 5, 1, 4, 3, 2 }, { "sa", "pb", "sa", "ra", "ra", "sa", "pa" } },
+		{ 5, { 5, 2, 1, 3, 4 }, { "ra", "sa" } },
+		{ 5, { 5, 2, 1, 4, 3 }, { "ra", "ra", "pb", "sa", "rra", "pa" } },
+		{ 5, { 5, 2, 3, 1, 4 }, { "ra", "ra", "sa", "rra", "sa" } },
+		{ 5, { 5, 2, 3, 4, 1 }, { "rra", "sa", "ra" } },
+		{ 5, { 5, 2, 4, 1, 3 }, { "sa", "pb", "sa", "rra", "pa", "rra" } },
+		{ 5, { 5, 2, 4, 3, 1 }, { "ra", "ra", "sa", "ra", "ra", "sa", "ra" } },
+		{ 5, { 5, 3, 1, 2, 4 }, { "sa", "rra", "sa", "rra", "rra" } },
+		{ 5, { 5, 3, 1, 4, 2 }, { "rra", "pb", "ra", "sa", "pa", "sa" } },
+		{ 5, { 5, 3, 2, 1, 4 }, { "sa", "rra", "sa", "rra", "rra", "sa" } },
+		{ 5, { 5, 3, 2, 4, 1 }, { "rra", "pb", "ra", "sa", "pa" } },
+		{ 5, { 5, 3, 4, 1, 2 }, { "sa", "ra", "sa", "ra", "ra" } },
+		{ 5, { 5, 3, 4, 2, 1 }, { "sa", "ra", "sa", "ra", "ra", "sa" } },
+		{ 5, { 5, 4, 1, 2, 3 }, { "sa", "ra", "ra" } },
+		{ 5, { 5, 4, 1, 3, 2 }, { "sa", "rra", "rra", "sa", "rra" } },
+		{ 5, { 5, 4, 2, 1, 3 }, { "sa", "ra", "ra", "sa" } },
+		{ 5, { 5, 4, 2, 3, 1 }, { "sa", "rra", "sa", "ra", "sa", "ra" } },
+		{ 5, { 5, 4, 3, 1, 2 }, { "pb", "sa", "ra", "ra", "pa", "ra" } },
+		{ 5, { 5, 4, 3, 2, 1 }, { "sa", "rra", "pb", "ra", "ra", "sa", "pa" } },
 }
 
 void	ft_exec_op(int op, t_stack *stack, int nb_ope)
@@ -125,264 +297,9 @@ void	ft_exec_op(int op, t_stack *stack, int nb_ope)
 			ft_sb(stack);
 		else if (op == SS)
 			ft_ss(stack);
+		write(1, "\n", 1);
 		nb_ope--;
 	}
-}
-
-void	exec_ope_n(t_stack *stack)
-{
-	if (stack->next_id < (stack->size_a / 2 + 1) && stack->id <
-	(stack->size_b / 2 + 1))
-	{
-		ft_exec_op(RR, stack, min(stack->next_id, stack->id));
-		ft_exec_op(RA, stack, max(0, stack->id - min(stack->next_id, stack->id)))
-		ft_exec_op(RB, stack, max(0, stack->id - min(stack->next_id, stack->id)))
-	}
-	else if (stack->next_id >= (stack->size_a / 2 + 1) && stack->id >=
-	(stack->size_b / 2 + 1))
-	{
-		ft_exec_op(RRR, stack, min(stack->size_a - stack->next_id, stack->size_b - stack->id));
-		ft_exec_op(RRA, stack, max(0, stack->size_a - stack->next_id
-			- min(stack->size_a - stack->next_id, stack->size_b - stack->id)));
-		ft_exec_op(RRB, stack, max(0, stack->size_b - stack->id -
-			min(stack->size_a - stack->next_id, stack->size_b - stack->id)));
-	}
-	else if (stack->next_id > (stack->size_a / 2 + 1) && stack->id >=
-	(stack->size_b / 2 + 1))
-	{
-		ft_exec_op(RA, stack, stack->next_id);
-		ft_exec_op(RRB, stack, stack->size_b - stack->id);
-	}
-	else if (stack->next_id >= (stack->size_a / 2 + 1) && stack->id <
-	(stack->size_b / 2 + 1))
-	{
-		ft_exec_op(RRA, stack, stack->size_a - stack->next_id);
-		ft_exec_op(RB, stack, stack->id);
-	}
-	ft_exec_op(PA, stack, 1);
-}
-
-int		*best_op(t_stack *stack)
-{
-	t_value	*tmp;
-	int		op;
-
-	tmp = stack->b->next;
-	stack->next_id = get_next_id(stack->a, tmp->value);
-	stack->id = get_id(stack->b, tmp->value);
-	stack->size_a = ft_lstsize(stack->a);
-	stack->size_b = ft_lstsize(stack->b);
-}
-
-void	search_op(t_stack *stack)
-{
-	int	op;
-
-	while (stack->b->next != stack->b)
-	{
-		best_op(stack);
-		apply_op(stack);
-	}
-	free(op);
-}
-
-void	swap_stack(t_stack *stack)
-{
-	int	i;
-
-	i = stack->a->id;
-	if (stack->a->id == 1)
-		ft_exec_op(RA, stack);
-	else
-		ft_exec_op(PB, stack);
-	while (stack->a->id != i)
-	{
-		if (stack->a->id == 1)
-			ft_exec_op(RA, stack, 1);
-		else
-			ft_exec_op(PB, stack, 1);
-	}
-}
-
-void	set_flags(t_stack *stack)
-{
-	t_value	tmp;
-	int		i;
-	int		*x;
-
-	tmp = stack->a;
-	if (tmp->id == stack->start_chain)
-		tmp->flag = 1;
-	x = &tmp;
-	while (tmp)
-	{
-		i = tmp->id;
-		if (tmp->id > i)
-		{
-			i = tmp->id;
-			tmp->flag = 1;
-		}
-		tmp = tmp->next;
-	}
-	&tmp = x;
-	stack->a = tmp;
-}
-
-void	id_max(t_stack *stack)
-{
-	t_value	tmp;
-
-	tmp = stack->a;
-	stack->id_max = tmp->id;
-	while (tmp)
-	{
-		if (tmp->id > stack->id_max)
-			stack->id_max = tmp->id;
-		tmp = tmp->next;
-	}
-}
-
-void	longer_chain(t_stack *stack)
-{
-	t_value	tmp;
-	t_value	tmp_utils;
-	t_value	best;
-	int i[2];
-	int cur_id;
-
-	tmp = stack->a;
-	i[1] = 0;
-	while (tmp)
-	{
-		tmp_utils = tmp->next;
-		i[0] = 0;
-		cur_id = tmp->id;
-		while (tmp_utils != tmp)
-		{
-			if (tmp_utils = NULL)
-				tmp_utils = stack->a;
-			if (cur_id < tmp_utils->id)
-			{
-				i[0]++;
-				cur_id = tmp_utils->id;
-			}
-			tmp_utils = tmp_utils->next;
-		}
-		if (i > i[1])
-		{
-			best = tmp;
-			i[1] = i[0];
-		}
-		tmp = tmp->next;
-	}
-	stack->start_chain = best->id;
-}
-
-int		ft_pos(t_value *a, int target)
-{
-	int		i;
-	t_stack	*tmp;
-
-	tmp = a;
-	i = 1;
-	while (tmp->id != target)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
-}
-
-void	add_id(t_value *a, int *j)
-{
-	int	u;
-	int	tmp;
-
-	u = -1;
-	while (j[++u])
-	{
-		if (j[u + 1] && (j[u] > j[u + 1]))
-		{
-			tmp = j[u];
-			j[u] = j[u + 1];
-			j[u + 1] = tmp;
-			u = -1;
-		}
-	}
-	while (a->next)
-	{
-		u = -1;
-		while (a->value != j[++u])
-			;
-		a->id = u;
-	}
-}
-
-int	verif_doublon(char **av)
-{
-	int	i;
-	int	j;
-	int	x;
-
-	i = -1;
-	while (av[++i])
-	{
-		x = -1;
-		j = i + 1;
-		while (av[i][++x])
-		{
-			if ((av[i][x] == av[j][x]) && (x == 0))
-			{
-				while (av[i][x] && av[j][x] && (av[i][x] == av[j][x]))
-					x++;
-				if (!av[i][x] && !av[j][x])
-					return (0);
-			}
-		}
-	}
-	return (1);
-}
-
-int	verif_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == '-')
-	{
-		while (str[i++])
-		;
-		if (i > 11)
-		return (0);
-	}
-	else
-	{
-		while (str[i++])
-		;
-		if (i > 10)
-		return (0);
-	}
-	if (ft_atoiminmax(i, str) == 0)
-		return (0);
-	return (1);
-}
-
-int	ft_verif(int ac, char **av)
-{
-	int	i;
-
-	i = 0;
-	while (i < ac)
-	{
-		i++;
-		if (ft_isdigit(av[i]) == 0)
-		return (0);
-		if (verif_len(av[i]) == 0)
-			return (0);
-	}
-	if (verif_doublon(av) == 0)
-		return (0);
-	return (1);
 }
 
 int	main(int ac, char **av)
@@ -426,6 +343,22 @@ int	main(int ac, char **av)
 	longer_chain(&stack);
 	set_flags(&stack);
 	id_max(&stack);
-	swap_stack(&stack);
+	if (stack->id_max <= 5)
+	{
+		if (stack->id_max == 2)
+			case_two(&stack);
+		if (stack->id_max == 3)
+			case_three(&stack);
+		if (stack->id_max == 4)
+			case_four(&stack);
+		if (stack->id_max == 5)
+			case_five(&stack);
+	}
+	else
+	{
+		swap_stack(&stack);
+		search_op(&stack);
+	}
+	free(stack);
 	return;
 }

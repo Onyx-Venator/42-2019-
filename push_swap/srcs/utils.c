@@ -6,11 +6,27 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:50:02 by anonymou          #+#    #+#             */
-/*   Updated: 2021/06/10 13:42:09 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/08/28 11:50:31 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+int		min(int i, int j)
+{
+	if (i < j)
+		return (i);
+	else
+		return (j);
+}
+
+int		max(int i, int j)
+{
+	if (i < j)
+		return (j);
+	else
+		return (i);
+}
 
 int	ft_isdigit(char *str)
 {
