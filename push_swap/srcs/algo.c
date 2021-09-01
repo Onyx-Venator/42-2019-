@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:29:39 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/08/31 13:53:34 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/08/31 15:20:16 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static_void	case_b(t_stack *stack)
 {
-	ft_exec_op(RR, stack, min(stack->size_a - stack->next_id, stack->size_b
+	ft_exec_op(RRR, stack, min(stack->size_a - stack->next_id, stack->size_b
 		- stack->id));
 	ft_exec_op(RRA, stack, max(0, stack->size_a - stack->next_id
 		- min(stack->size_a - stack->next_id, stack->size_b - stack->id)));

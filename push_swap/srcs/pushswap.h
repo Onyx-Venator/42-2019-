@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:45 by anonymou          #+#    #+#             */
-/*   Updated: 2021/08/31 13:52:03 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/01 16:44:39 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,15 @@ void	case_two(t_stack *stack);
 void	case_three(t_stack *stack);
 void	case_four(t_stack *s);
 void	case_five(t_stack *s);
+void	five_utils(t_stack *s, t_value *t_one, t_value *t_two, t_value *t_t);
+void	one(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	two(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	three(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	four(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	five(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	six(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	seven(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	eight(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	nine(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	ten(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
 #endif
