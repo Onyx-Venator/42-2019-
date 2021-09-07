@@ -1,6 +1,6 @@
 # *** NAME - CC - FLAGS ****************************************************** #
 
-NAME					= 	minishell
+NAME					= 	pushswap
 
 CC						= 	clang
 
@@ -28,13 +28,7 @@ HEADER_DIR				=	\
 
 HEADER							=	\
 									color_shell.h \
-									libft_lst.h \
-									minishell.h \
-									minishell_builtins.h \
-									minishell_ast_construction.h \
-									minishell_termcaps.h \
-									minishell_ast_execution.h \
-									minishell_variables.h \
+									pushswap.h \
 
 # *** SRCS ******************************************************************* #
 
@@ -121,8 +115,6 @@ OBJS					=	$(addprefix $(OBJS_DIR), $(OBJS_LIST))
 all: $(OBJS) $(SRCS) $(NAME)
 
 $(NAME): $(OBJS) $(SRCS)
-	@ make -C libft/
-	@ make -C libftprintf/
 	@ $(CC) $(CFLAGS) $(HDIR) $(OBJS) $(INC_LIB) $(LIB) -o $@
 
 

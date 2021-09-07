@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:45 by anonymou          #+#    #+#             */
-/*   Updated: 2021/09/01 16:44:39 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/06 20:14:17 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define  PUSHSWAP_H
 
 # include <unistd.h>
-# include <stdlib.c>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
 
 # define RA		1
 # define RB		2
@@ -27,18 +29,20 @@
 # define SA		9
 # define SB		10
 # define SS		11
-# define A		12
-# define B		13
-# define C		14
-# define D		15
+# define A		1
+# define B		2
+# define C		3
+# define D		4
+# define MINUS_STR    "----------------------------------------------------- -----------------------------------------------"
+# define TEST "\033[36;01m(%s:%d) \033[31;01m%s\033[0m %.*s>\033[35;01m %d\033[0m\n", __FILE__, __LINE__, __FUNCTION__, (int)(70 - (strlen(__FUNCTION__)+ strlen(__FILE__) + 3)), MINUS_STR, __LINE__
 
-typedef struct	s_value
+typedef struct		s_value
 {
-	t_value		*next;
-	int	 		value;
-	int	 		id;
-	int			flag;
-}				t_value;
+	struct s_value	*next;
+	int	 			value;
+	int	 			id;
+	int				flag;
+}					t_value;
 
 typedef struct	s_stack
 {
@@ -78,10 +82,9 @@ int		ft_pos(t_value *a, int target);
 void	ft_exec_op(int op, t_stack *stack, int nb_ope);
 void	longer_chain(t_stack *stack);
 void	id_max(t_stack *stack);
-void	set_flags(t_stack *stack);
-void	swap_stack(t_stack *stack);
+void	set_flag(t_value *a);
 int		end_stack(t_value *a);
-int		ft_lstsize(t_list *lst);
+int		ft_lstsize(t_value *lst);
 int		get_next_id(t_value *a, int val);
 int		get_stack_min(t_value *a);
 int		get_stack_max(t_value *a);
@@ -107,4 +110,9 @@ void	seven(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
 void	eight(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
 void	nine(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
 void	ten(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t);
+void	init_case(t_stack *stack);
+void	strat_op(int op, t_stack *stack);
+void	align_stack(t_stack *stack);
+int		count_flag(t_value *a, int i);
+int		swap(t_stack *stack);
 #endif

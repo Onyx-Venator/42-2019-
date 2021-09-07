@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:50:02 by anonymou          #+#    #+#             */
-/*   Updated: 2021/08/28 11:50:31 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/05 00:07:19 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@ int		min(int i, int j)
 {
 	if (i < j)
 		return (i);
-	else
-		return (j);
+	return (j);
 }
 
 int		max(int i, int j)
 {
-	if (i < j)
-		return (j);
-	else
+	if (i > j)
 		return (i);
+	return (j);
 }
 
 int	ft_isdigit(char *str)
@@ -35,13 +33,8 @@ int	ft_isdigit(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] >= '0' && str[i] <= '9' || str[i] == '-')
-		{
-			if (str[i + 1] && str[i + 1] != str[i])
-				i++;
-			else
-				return (0);
-		}
+		if ((str[i] >= '0' && str[i] <= '9') || str[i] == '-')
+			i++;
 		else
 			return (0);
 	}
@@ -50,14 +43,12 @@ int	ft_isdigit(char *str)
 
 int	ft_atoiminmax(int i,char *str)
 {
-	int		i;
 	int		j;
 	long	n;
 
-	i = -1;
 	j = 1;
 	n = 0;
-	while (str[++i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\r'
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\r'
 	|| str[i] == '\v' || str[i] == '\f')
 		;
 	if (str[i] == '+' || str[i] == '-')
@@ -65,15 +56,16 @@ int	ft_atoiminmax(int i,char *str)
 		if (str[++i - 1] == '-')
 			j *= -1;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i] >= '0' && str[i] <= '9' && str[i])
 		n = n * 10 + str[++i - 1] - '0';
+	n *= j;
 	if (i == 10)
 		if (n > 2147483647)
 			return (0);
 	if (i == 11)
 		if (n < -2147483648)
 			return (0);
-	return (n * j);
+	return (n);
 }
 
 

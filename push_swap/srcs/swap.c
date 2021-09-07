@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 12:01:14 by anonymou          #+#    #+#             */
-/*   Updated: 2021/08/25 12:20:13 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/03 20:10:31 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_sa(t_stack *t)
 {
 	t_value *tmp;
 
-	write(1, "sa", 2);
 	if (t->a && t->a->next)
 	{
 		tmp = t->a->next;
@@ -30,7 +29,6 @@ void	ft_sb(t_stack *t)
 {
 	t_value *tmp;
 
-	write(1, "sb", 2);
 	if (t->b && t->b->next)
 	{
 		tmp = t->b->next;
@@ -42,7 +40,6 @@ void	ft_sb(t_stack *t)
 
 void	ft_ss(t_stack *t)
 {
-	write(1, "ss", 2);
 	ft_sa(t);
 	ft_sb(t);
 }

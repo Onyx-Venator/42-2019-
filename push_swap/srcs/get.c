@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:34:05 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/08/28 11:38:15 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/06 20:37:56 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,9 @@ int		get_stack_max(t_value *a)
 	while (tmp)
 	{
 		if (tmp->value > max)
-			max = tmp->value
+			max = tmp->value;
 		tmp = tmp->next;
 	}
-	free(tmp);
 	return (max);
 }
 
@@ -56,35 +55,37 @@ int		get_stack_min(t_value *a)
 	while (tmp)
 	{
 		if (tmp->value < min)
-			min = tmp->value
+			min = tmp->value;
 		tmp = tmp->next;
 	}
-	free(tmp);
 	return (min);
 }
 
 int		get_next_id(t_value *a, int val)
 {
 	t_value	*tmp;
-	t_value	*last;
 	int		min;
 	int		max;
-	int		index;
+	int		id;
 
-	index = 0;
+	id = 0;
 	min = get_stack_min(a);
 	max = get_stack_max(a);
 	tmp = a;
 	if (val < min || val > max)
-		index = get_id(a, min);
+		id = get_id(a, min);
 	else
 	{
-		while (last->next)
-			last = last->next;
-		while (val > tmp->value)
+		while (tmp->value != min)
 			tmp = tmp->next;
-		index = get_id(a, tmp->value);
-		last->next = NULL;
+		while (val > tmp->value)
+		{
+			if (!tmp->next)
+				tmp = a;
+			else
+				tmp = tmp->next;
+		}
+		id = get_id(a, tmp->value);
 	}
-	return (index);
+	return (id);
 }

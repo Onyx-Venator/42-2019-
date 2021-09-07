@@ -6,74 +6,78 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/29 21:21:00 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/08/29 21:25:09 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/06 18:13:29 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int		end_stack(t_value *a)
+static int	*save_flag(t_value *a, int size)
 {
-	t_value tmp;
-
-	tmp = a;
-	while (tmp)
-		tmp =tmp->next;
-	return (tmp->id);
-}
-
-void	swap_stack(t_stack *stack)
-{
-	int	i;
-
-	i = stack->a->id;
-	if (stack->a->id == 1)
-		ft_exec_op(RA, stack, 1);
-	else
-		ft_exec_op(PB, stack, 1);
-	while (stack->a->id != i)
-	{
-		if (stack->a->id == 1)
-			ft_exec_op(RA, stack, 1);
-		else
-			ft_exec_op(PB, stack, 1);
-	}
-}
-
-void	set_flags(t_stack *stack)
-{
-	t_value	tmp;
+	t_value	*tmp;
+	int		*save;
 	int		i;
-	int		*x;
 
-	tmp = stack->a;
-	if (tmp->id == stack->start_chain)
-		tmp->flag = 1;
-	x = &tmp;
-	while (tmp)
+	i = -1;
+	tmp = a;
+	save = malloc(sizeof(int) * (size));
+	if (!save)
+		return (NULL);
+	while (++i < size)
 	{
-		i = tmp->id;
-		if (tmp->id > i)
-		{
-			i = tmp->id;
-			tmp->flag = 1;
-		}
+		save[i] = tmp->flag;
 		tmp = tmp->next;
 	}
-	&tmp = x;
-	stack->a = tmp;
+	return (save);
 }
 
-void	id_max(t_stack *stack)
+int			swap_a(t_stack *stack)
 {
-	t_value	tmp;
+	int		i;
+	int		count;
+	int		next_count;
+	int		*save;
+	t_value	*tmp;
 
+	count = count_flag(stack->a, 1);
+	save = save_flag(stack->a, ft_lstsize(stack->a));
+	ft_sa(stack);
+	set_flag(stack->a);
+	next_count = count_flag(stack->a, 1);
+	ft_sa(stack);
 	tmp = stack->a;
-	stack->id_max = tmp->id;
+	i = -1;
 	while (tmp)
 	{
-		if (tmp->id > stack->id_max)
-			stack->id_max = tmp->id;
+		tmp->flag = save[++i];
 		tmp = tmp->next;
+	}
+	free(save);
+	if (count < next_count)
+		return (1);
+	return (0);
+}
+
+void		longer_chain(t_stack *stack)
+{
+	set_flag(stack->a);
+	while (count_flag(stack->a, 0) > 0)
+	{
+		if (swap_a(stack) == 1)
+		{
+			ft_sa(stack);
+			write(1, "sa\n", 3);
+			set_flag(stack->a);
+		}
+		else if (stack->a->flag == 0)
+		{
+			ft_pb(stack);
+			write(1, "pb\n", 3);
+		}
+		else
+		{
+			ft_ra(stack);
+			write(1, "ra\n", 3);
+		}
 	}
 }

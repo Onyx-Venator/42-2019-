@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 17:23:25 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/08/23 13:28:05 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/06 19:33:17 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_lstsize(t_value *lst)
 		i++;
 		tmp = tmp->next;
 	}
-	free(tmp);
 	return (i);
 }
 

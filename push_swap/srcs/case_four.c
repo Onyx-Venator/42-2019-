@@ -6,13 +6,13 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 15:36:34 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/09/01 16:09:53 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/02 18:24:06 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-static_void	four_utils(t_stack *s, t_value *t_one, t_value *t_two)
+static void	four_utils(t_stack *s, t_value *t_one, t_value *t_two)
 {
 	if (s->a->id == 4 && t_one->id == 2  && t_two->id == 1)
 		write(1, "ra\nsa\n", 6);
@@ -24,7 +24,7 @@ static_void	four_utils(t_stack *s, t_value *t_one, t_value *t_two)
 		write(1, "sa\nra\nra\nsa\n", 12);
 }
 
-static_void	case_four_utils(t_stack *s, t_value *t_one, t_value *t_two)
+static void	case_four_utils(t_stack *s, t_value *t_one, t_value *t_two)
 {
 	if (s->a->id == 2 && t_one->id == 4  && t_two->id == 1)
 		write(1, "sa\nra\nsa\n", 9);
@@ -47,7 +47,7 @@ static_void	case_four_utils(t_stack *s, t_value *t_one, t_value *t_two)
 	else if (s->a->id == 4 && t_one->id == 1  && t_two->id == 3)
 		write(1, "ra\nra\nsa\nrra\n", 16);
 	else
-		four_utils(s, &t_one, &t_two);
+		four_utils(s, t_one, t_two);
 }
 
 void	case_four(t_stack *s)
@@ -55,7 +55,7 @@ void	case_four(t_stack *s)
 	t_value	*t_one;
 	t_value	*t_two;
 
-	t_one = stack->a->next;
+	t_one = s->a->next;
 	t_two = t_one->next;
 	if (s->a->id == 1 && t_one->id == 2  && t_two->id == 4)
 		write(1, "pb\nsa ra pa\n", 12);
@@ -76,5 +76,5 @@ void	case_four(t_stack *s)
 	else if (s->a->id == 2 && t_one->id == 3  && t_two->id == 4)
 		write(1, "rra\n", 4);
 	else
-		case_four_utils(s, &t_one, &t_two);
+		case_four_utils(s, t_one, t_two);
 }
