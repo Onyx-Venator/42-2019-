@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 15:36:34 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/09/02 18:24:06 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/07 15:48:32 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	case_four_utils(t_stack *s, t_value *t_one, t_value *t_two)
 	else if (s->a->id == 4 && t_one->id == 1  && t_two->id == 2)
 		write(1, "ra\n", 3);
 	else if (s->a->id == 4 && t_one->id == 1  && t_two->id == 3)
-		write(1, "ra\nra\nsa\nrra\n", 16);
+		write(1, "ra\nra\nsa\nrra\n", 13);
 	else
 		four_utils(s, t_one, t_two);
 }

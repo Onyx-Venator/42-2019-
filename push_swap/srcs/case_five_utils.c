@@ -6,7 +6,7 @@
 /*   By: cofoundo <cofoundo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 16:15:39 by cofoundo          #+#    #+#             */
-/*   Updated: 2021/09/02 18:25:39 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:13:11 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	five(t_stack *s, t_value *t_one, t_value *t_two,t_value *t_t)
 	else if (s->a->id == 3 && t_one->id == 4 && t_two->id == 5 && t_t->id == 1)
 		write(1, "rra\nrra\n", 8);
 	else if (s->a->id == 3 && t_one->id == 4 && t_two->id == 5 && t_t->id == 2)
-		write(1, "rra\nrra\nsa\n", 10);
+		write(1, "rra\nrra\nsa\n", 11);
 	else if (s->a->id == 3 && t_one->id == 5 && t_two->id == 1 && t_t->id == 2)
 		write(1, "rra\nsa\nrra\nrra\n", 15);
 	else if (s->a->id == 3 && t_one->id == 5 && t_two->id == 1 && t_t->id == 4)

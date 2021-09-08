@@ -6,7 +6,7 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:45 by anonymou          #+#    #+#             */
-/*   Updated: 2021/09/06 20:14:17 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:46:24 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
 
 # define RA		1
 # define RB		2
@@ -33,8 +31,6 @@
 # define B		2
 # define C		3
 # define D		4
-# define MINUS_STR    "----------------------------------------------------- -----------------------------------------------"
-# define TEST "\033[36;01m(%s:%d) \033[31;01m%s\033[0m %.*s>\033[35;01m %d\033[0m\n", __FILE__, __LINE__, __FUNCTION__, (int)(70 - (strlen(__FUNCTION__)+ strlen(__FILE__) + 3)), MINUS_STR, __LINE__
 
 typedef struct		s_value
 {
@@ -115,4 +111,5 @@ void	strat_op(int op, t_stack *stack);
 void	align_stack(t_stack *stack);
 int		count_flag(t_value *a, int i);
 int		swap(t_stack *stack);
+void	free_stack(t_value *a);
 #endif

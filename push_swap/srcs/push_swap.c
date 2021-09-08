@@ -6,11 +6,25 @@
 /*   By: anonymou <anonymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 11:20:58 by anonymou          #+#    #+#             */
-/*   Updated: 2021/09/06 19:50:52 by cofoundo         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:59:45 by cofoundo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+void		free_stack(t_value *a)
+{
+	t_value	*tmp;
+	t_value	*utils;
+
+	tmp = a;
+	while (tmp)
+	{
+		utils = tmp->next;
+		free(tmp);
+		tmp = utils;
+	}
+}
 
 static int	stack_min(t_value *a)
 {
@@ -130,8 +144,6 @@ void	align_stack(t_stack *stack)
 	int	i;
 
 	i = get_id(stack->a, stack_min(stack->a));
-	printf("align i : %d\n", i);
-	printf("size a : %d\n", stack->size_a);
 	while (stack->a->id != 1)
 	{
 		if (i < (stack->size_a / 2 + 1))
@@ -181,7 +193,7 @@ int	main(int ac, char **av)
 	if (check_j(j) == 1)
 	{
 		free(j);
-		free(tmp);
+		free_stack(stack.a);
 		return (0);
 	}
 	add_id(stack.a, j);
@@ -195,20 +207,7 @@ int	main(int ac, char **av)
 		search_op(&stack);
 		align_stack(&stack);
 	}
-	//free lst1
-	while (stack.a)
-	{
-		printf("id : %d\n", stack.a->id);
-		stack.a = stack.a->next;
-	}
+	free_stack(stack.a);
 	free(j);
 	return (0);
 }
-/*while (stack.a)
-{
-	printf("value : %d\n", stack.a->value);
-	printf("id : %d\n", stack.a->id);
-	printf("flag : %d\n", stack.a->flag);
-	stack.a = stack.a->next;
-}
-printf("stack.start_chain : %d\n", stack.start_chain);*/
